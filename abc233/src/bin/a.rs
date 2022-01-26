@@ -6,10 +6,5 @@ fn main() {
         y: f64
     }
 
-    if y <= x {
-        println!("0");
-    } else {
-        let z = (y - x) / 10.;
-        println!("{}", z.ceil());
-    }
+    println!("{}", ((y - x) / 10.).ceil().max(0.));
 }

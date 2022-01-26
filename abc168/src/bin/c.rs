@@ -8,5 +8,5 @@ fn main() {
         h: f64,
         m: f64,
     }
-    println!("hello world");
+    println!("{}", a + b + h + m);
 }

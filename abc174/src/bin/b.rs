@@ -2,17 +2,21 @@ use proconio::input;
 
 fn main() {
     input! {
-        (n, d): (i32, f64),
-        v: [(f64, f64); n],
+        n: i64,
+        x: [i64; n],
     }
 
-    let mut ans = 0;
+    let mut m: i64 = 0;
+    let mut y: i64 = 0;
+    let mut t: i64 = 0;
 
-    for (x, y) in v {
-        if x.hypot(y) <= d {
-            ans += 1;
-        }
+    for v in &x {
+        m += v.abs();
+        y += v * v;
+        t = t.max(v.abs());
     }
 
-    println!("{}", ans);
+    println!("{}", m);
+    println!("{}", (y as f64).sqrt());
+    println!("{}", t);
 }

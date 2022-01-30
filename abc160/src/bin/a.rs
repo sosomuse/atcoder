@@ -1,11 +1,16 @@
 use proconio::input;
+use proconio::marker::Chars;
 
 fn main() {
     input! {
-        s: String,
+        s: Chars,
     }
-
-    let ans = if s == "ABC" { "ARC" } else { "ABC" };
-
-    println!("{}", ans);
+    println!(
+        "{}",
+        if s[2] == s[3] && s[4] == s[5] {
+            "Yes"
+        } else {
+            "No"
+        }
+    );
 }

@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        x: i64,
+    }
+
+    println!("{}", x.div_euclid(10));
 }

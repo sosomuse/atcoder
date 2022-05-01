@@ -2,14 +2,14 @@ use proconio::input;
 
 fn main() {
     input! {
-        (a, b): (i32, i32),
+        a: [usize; 10],
     }
 
-    let abs = (a - b).abs();
+    let mut i = 0;
 
-    if abs == 1 || abs == 9 {
-        println!("Yes");
-    } else {
-        println!("No");
+    for _ in 0..3 {
+        i = a[i];
     }
+
+    println!("{}", i);
 }

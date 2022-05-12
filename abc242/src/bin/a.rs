@@ -15,5 +15,5 @@ fn main() {
         }
     };
 
-    println!("{}", ans);
+    println!("{:.12}", ans);
 }

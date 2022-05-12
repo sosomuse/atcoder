@@ -1,3 +1,19 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        (a, b, c, x): (f64,f64,f64,f64),
+    }
+
+    let ans = {
+        if a >= x {
+            1.0
+        } else if b < x {
+            0.0
+        } else {
+            c / (b - a)
+        }
+    };
+
+    println!("{}", ans);
 }

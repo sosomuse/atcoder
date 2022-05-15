@@ -10,11 +10,11 @@ fn main() {
     let mut c: u32 = 0;
     let mut d: u32 = 0;
 
-    for (v, i) in a.into_iter().enumerate() {
-        for (s, j) in b.into_iter().enumerate() {
-            if v == s && i == j {
+    for i in 0..a.len() {
+        for j in 0..b.len() {
+            if a[i] == b[j] && i == j {
                 c += 1;
-            } else if v == s {
+            } else if a[i] == b[j] {
                 d += 1;
             }
         }

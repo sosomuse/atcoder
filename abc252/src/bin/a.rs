@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: u8,
+    }
+
+    print!("{}", n as char);
 }

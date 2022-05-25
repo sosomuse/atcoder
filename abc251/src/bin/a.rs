@@ -2,7 +2,7 @@ use proconio::input;
 
 fn main() {
     input! {
-        mut s: String,
+        s: String,
     }
 
     let len = s.len();

@@ -2,21 +2,23 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: u32,
-        mut d: [u32; n],
+        (n, y): (i32, i32),
     }
 
-    d.sort_by(|a, b| b.cmp(a));
+    for i in 0..=n {
+        for j in 0..=n {
+            let c = n - i - j;
 
-    let mut ans = 0;
-    let mut current = 0;
+            if i + j > n {
+                continue;
+            }
 
-    for v in d {
-        if v > current {
-            ans += 1;
-            current = v;
+            if i * 10000 + j * 5000 + c * 1000 == y {
+                println!("{} {} {}", i, j, c);
+                std::process::exit(0);
+            }
         }
     }
 
-    println!("{}", ans);
+    println!("-1 -1 -1");
 }

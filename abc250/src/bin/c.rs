@@ -8,39 +8,36 @@ fn main() {
         x: [u32; q],
     }
 
-    let mut hash_map: HashMap<u32, u32> = std::collections::HashMap::new();
+    let mut hash_map_key: HashMap<u32, u32> = std::collections::HashMap::new();
+    let mut hash_map_value: HashMap<u32, u32> = std::collections::HashMap::new();
     for i in 1..=n {
-        hash_map.entry(i).or_insert(i);
+        hash_map_key.entry(i).or_insert(i);
+        hash_map_value.entry(i).or_insert(i);
     }
 
-    dbg!(&x);
-
     for i in 0..x.len() {
-        let v = x[i];
+        let target_v = x[i];
 
-        let c = hash_map.clone();
-        let c2 = hash_map.clone();
-        let current = c.get(&v).unwrap();
+        let current_i = *hash_map_key.get_mut(&target_v).unwrap();
 
-        let t = {
-            if current == &n {
-                current - 1
+        let next_i = {
+            if current_i == n {
+                current_i - 1
             } else {
-                current + 1
+                current_i + 1
             }
         };
 
-        dbg!(&v);
-        dbg!(&t);
-        dbg!(&hash_map);
-        let (_, next) = c2.into_iter().find(|(_, k)| k == &t).unwrap();
+        let next_v = *hash_map_value.get(&next_i).unwrap();
 
-        hash_map.insert(v, next);
-        hash_map.insert(next, *current);
+        hash_map_key.insert(target_v, next_i);
+        hash_map_key.insert(next_v, current_i);
+        hash_map_value.insert(next_i, target_v);
+        hash_map_value.insert(current_i, next_v);
     }
 
     for i in 1..=n {
-        let ans = hash_map.get(&i).unwrap();
+        let ans = hash_map_value.get(&i).unwrap();
         print!("{}", ans);
 
         if i != n {

@@ -11,4 +11,13 @@ fn main() {
 
     println!("{:?}", a);
     println!("{:?}", b);
+
+    for _ in 0..n {
+        // for内標準入力
+        input! {
+            x: isize,
+        }
+
+        println!("{}", x);
+    }
 }

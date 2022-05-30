@@ -35,6 +35,9 @@ fn main() {
     println!("{}", max);
     println!("{}", min);
 
-    // sort
+    // sort（大きい順）
     a.sort();
+
+    // sort_by（小さい順）
+    a.sort_by(|s, t| t.cmp(s));
 }

@@ -11,7 +11,7 @@ fn main() {
     println!("{}", func((n, k), a, b));
 }
 
-fn func((n, k): (u32, u32), a: Vec<u32>, b: Vec<u32>) -> String {
+fn func((_, _): (u32, u32), a: Vec<u32>, b: Vec<u32>) -> String {
     let mut maximums = HashMap::new();
     let max = a.iter().max().unwrap();
 

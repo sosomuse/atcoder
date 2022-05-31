@@ -5,6 +5,8 @@ fn main() {
         (h, w): (usize, usize),
     }
 
+    let mut vertical_sum = std::collections::HashMap::<usize, usize>::new();
+    let mut horizontal_sum = std::collections::HashMap::<usize, usize>::new();
     let mut vertical_map = std::collections::HashMap::<usize, Vec<usize>>::new();
     let mut horizontal_map = std::collections::HashMap::<usize, Vec<usize>>::new();
 
@@ -14,26 +16,26 @@ fn main() {
         }
 
         for j in 0..a.len() {
-            let vertical_v = a[i];
-            vertical_map.entry(i).or_insert(Vec::new()).push(vertical_v);
-
             let horizontal_v = a[j];
             horizontal_map
-                .entry(j)
+                .entry(i)
                 .or_insert(Vec::new())
-                .push(horizontal_v)
+                .push(horizontal_v);
+            *horizontal_sum.entry(i).or_insert(0) += horizontal_v;
+
+            let vertical_v = a[j];
+            vertical_map.entry(j).or_insert(Vec::new()).push(vertical_v);
+            *vertical_sum.entry(j).or_insert(0) += vertical_v;
         }
     }
 
-    dbg!(&vertical_map);
-    dbg!(&horizontal_map);
-
     for i in 0..h {
         for j in 0..w {
-            let vertical_sum = vertical_map.get(&i).unwrap();
-            let horizontal_sum = horizontal_map.get(&j).unwrap();
+            let v_sum = vertical_sum.get(&j).unwrap();
+            let h_sum = horizontal_sum.get(&i).unwrap();
+            let target = horizontal_map.get(&i).unwrap()[j];
 
-            print!("{}", vertical_sum.into_iter().sum().unwrap());
+            print!("{}", v_sum + h_sum - target);
 
             if j != w {
                 print!(" ");

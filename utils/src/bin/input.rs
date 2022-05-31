@@ -7,10 +7,13 @@ fn main() {
         a: [u32; n],
         // Vec2
         b: [u32; k],
+        // 行列
+        c: [[u32; n]; k],
     }
 
     println!("{:?}", a);
     println!("{:?}", b);
+    println!("{:?}", c);
 
     for _ in 0..n {
         // for内標準入力

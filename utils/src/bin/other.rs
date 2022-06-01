@@ -19,6 +19,9 @@ fn main() {
     let a = sigma(1, 5);
     println!("{}", a);
 
+    let a = binomial(1, 5);
+    println!("{}", a);
+
     // exit
     std::process::exit(0);
 }
@@ -64,6 +67,19 @@ fn binary_search(a: &Vec<i32>, key: i32) -> usize {
 }
 
 // sigma
+// 総和 - lが最後 rが最初
 fn sigma(l: usize, r: usize) -> usize {
     return (r - l + 1) * (r + l) / 2;
+}
+
+// 二項係数
+// n個の中からk個のモノを選ぶ組み合わせの数
+fn binomial(n: usize, k: usize) -> usize {
+    let mut ret = 1;
+    for i in 0..k {
+        ret *= n - i;
+        ret /= i + 1;
+    }
+
+    return ret;
 }

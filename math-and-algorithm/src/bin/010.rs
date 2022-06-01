@@ -1,3 +1,15 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+    }
+
+    let mut ans = 1;
+
+    for i in 1..=n {
+        ans *= i;
+    }
+
+    println!("{}", ans)
 }

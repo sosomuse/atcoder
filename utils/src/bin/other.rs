@@ -16,6 +16,9 @@ fn main() {
     let a = binary_search(&vec, 6);
     println!("{}", a);
 
+    let a = sigma(1, 5);
+    println!("{}", a);
+
     // exit
     std::process::exit(0);
 }
@@ -58,4 +61,9 @@ fn binary_search(a: &Vec<i32>, key: i32) -> usize {
     }
 
     return l;
+}
+
+// sigma
+fn sigma(l: usize, r: usize) -> usize {
+    return (r - l + 1) * (r + l) / 2;
 }

@@ -13,14 +13,17 @@ fn main() {
 }
 
 fn solve(n: usize) -> bool {
-    let mut is_prime = true;
+    // let mut is_prime = true;
 
     for i in 2..n {
         if n % i == 0 {
-            is_prime = false;
+            return false;
+        }
+
+        if i.pow(2) >= n {
             break;
         }
     }
 
-    is_prime
+    return true;
 }

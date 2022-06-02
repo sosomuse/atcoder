@@ -13,24 +13,20 @@ fn main() {
         *hash_map.entry(v).or_insert(0) += 1;
     }
 
-    for (k, v) in hash_map.into_iter() {
+    for (k, v) in &hash_map {
+        if *k >= 50000 {
+            continue;
+        }
         let target = 100000 - k;
-        let count = &0;
+        let count = hash_map.get(&target).unwrap_or(&0);
 
         if *count > 0 {
             ans += v * count;
         }
     }
 
+    let mid = hash_map.get(&50000).unwrap_or(&0);
+    ans += *mid * (mid - 1) / 2;
+
     println!("{}", ans);
-}
-
-fn binomial(n: usize, k: usize) -> usize {
-    let mut ret = 1;
-    for i in 0..k {
-        ret *= n - i;
-        ret /= i + 1;
-    }
-
-    return ret;
 }

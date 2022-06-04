@@ -40,4 +40,8 @@ fn main() {
 
     // sort_by（小さい順）
     a.sort_by(|s, t| t.cmp(s));
+
+    // 数値を文字列に変換して空白区切りで出力
+    let dst: Vec<String> = a.iter().map(|x| x.to_string()).collect();
+    println!("{}", dst.join(" "));
 }

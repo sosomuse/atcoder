@@ -5,5 +5,5 @@ fn main() {
         n: usize,
     }
 
-    println!("{}", 5 + n)
+    println!("{:0width$}", n % 100, width = 2);
 }

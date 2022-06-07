@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        s: String,
+    }
+
+    println!("0{}", s[..3].to_string());
 }

@@ -1,25 +1,40 @@
 fn main() {
-    // ステップ数の指定
     let a = fnc(100);
+    println!("{:?}", a);
+
+    let a = fnc_2(4);
     println!("{:?}", a);
 }
 
 fn fnc(n: usize) -> Vec<usize> {
-    let mut vec = Vec::new();
-    for i in 1..=n {
-        if i.pow(2) >= n {
-            break;
+    let mut lst: Vec<usize> = vec![];
+
+    let mut count = 1;
+
+    while count * count <= n {
+        if n % count == 0 {
+            lst.push(count);
+            if count != n / count {
+                lst.push(n / count);
+            }
         }
 
-        if n % i != 0 {
-            continue;
-        }
+        count += 1;
+    }
 
-        vec.push(i);
+    lst
+}
 
-        if i != n / i {
-            vec.push(n / i);
+// 約数の個数を求める
+fn fnc_2(n: usize) -> Vec<usize> {
+    let mut num_factors = vec![1; n + 1];
+    for i in 2..=n {
+        let mut j = i;
+        while j <= n {
+            num_factors[j] += 1;
+            j += i;
         }
     }
-    return vec;
+
+    num_factors
 }

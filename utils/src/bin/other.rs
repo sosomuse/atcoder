@@ -15,6 +15,8 @@ fn main() {
     let vec = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     let a = binary_search(&vec, 6);
     println!("{}", a);
+    let a = vec.binary_search(&6).unwrap_or_else(|i| i);
+    println!("{}", a);
 
     let a = sigma(1, 5);
     println!("{}", a);
@@ -83,3 +85,4 @@ fn binomial(n: usize, k: usize) -> usize {
 
     return ret;
 }
+

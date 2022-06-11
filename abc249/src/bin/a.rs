@@ -2,7 +2,7 @@ use proconio::input;
 
 fn main() {
     input! {
-        (a, b, c, d, e, f, x): (usize, usize,usize,usize,usize,usize,usize),
+        (a, b, c, d, e, f, x): (usize,usize,usize,usize,usize,usize,usize),
     }
 
     let taka = (x / (a + c)) * a * b + (x % (a + c)).min(a) * b;

@@ -8,39 +8,21 @@ fn main() {
         n: i64,
     }
 
-    let mut ans = 0;
+    if d == 0 {
+        println!("{}", (x - a).abs());
+        return;
+    }
+
     let max = a + d * (n - 1);
+    let mut ans = (a - x).abs().min(max - x);
+    let y = a + (x - a);
 
-    if x == a {
-        println!("{}", ans);
-        return;
+    for i in -2..3 {
+        let z = y + i * d;
+        if a <= z && a <= max || max <= z && max <= a {
+            ans = ans.min((z - x).abs());
+        }
     }
-
-    if d.is_positive() && max <= x {
-        ans = x - max;
-        println!("{}", ans);
-        return;
-    }
-
-    if d.is_positive() && a >= x {
-        ans = a - x;
-        println!("{}", ans);
-        return;
-    }
-
-    if d.is_negative() && max >= x {
-        ans = max - x;
-        println!("{}", ans);
-        return;
-    }
-
-    if d.is_negative() && a <= x {
-        ans = x - a;
-        println!("{}", ans);
-        return;
-    }
-
-    ans = ((x.abs() - a.abs()) % d).abs();
 
     println!("{}", ans);
 }

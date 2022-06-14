@@ -2,25 +2,29 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: u64,
-        q: u64,
-        mut a: [u64; n],
+        n: usize,
+        q: usize,
+        mut a: [usize; n],
     }
-
     a.sort();
+
+    let mut rw = vec![0; n + 1];
+
+    for (i, a) in a.iter().enumerate() {
+        rw[i + 1] = rw[i] + a;
+    }
 
     for _ in 0..q {
         input! {
-            x: u64,
+            x: usize,
         }
 
         let b = a.binary_search(&x).unwrap_or_else(|i| i);
-        dbg!(b);
-        let mins = a[..b].iter().sum::<u64>() / a[..b].len() as u64;
-        let maxs = a[b..].iter().sum::<u64>() / a[..b].len() as u64;
 
-        let ans = mins + maxs;
-
+        let mut ans = x * (b);
+        ans += rw[n] - rw[b];
+        ans -= rw[b];
+        ans -= x * (n - b);
         println!("{}", ans);
     }
 }

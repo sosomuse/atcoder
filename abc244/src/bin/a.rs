@@ -1,3 +1,10 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+        s: String
+    }
+
+    println!("{}", s[n - 1..].to_string());
 }

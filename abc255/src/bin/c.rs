@@ -9,17 +9,17 @@ fn main() {
     }
 
     if d == 0 {
-        println!("{}", (x - a).abs());
+        println!("{}", (a - x).abs());
         return;
     }
 
-    let max = a + d * (n - 1);
-    let mut ans = (a - x).abs().min(max - x);
+    let m = a + d * (n - 1);
+    let mut ans = (a - x).abs().min((m - x).abs());
     let y = a + (x - a);
 
     for i in -2..3 {
         let z = y + i * d;
-        if a <= z && a <= max || max <= z && max <= a {
+        if a <= z && z <= m || m <= z && z <= a {
             ans = ans.min((z - x).abs());
         }
     }

@@ -20,6 +20,7 @@ fn main() {
     for i in -2..3 {
         let z = y + i * d;
         if a <= z && z <= m || m <= z && z <= a {
+            dbg!(z, x);
             ans = ans.min((z - x).abs());
         }
     }

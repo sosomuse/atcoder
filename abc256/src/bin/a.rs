@@ -5,7 +5,5 @@ fn main() {
         n: u32,
     }
 
-    let s: usize = 2;
-
-    println!("{}", s.pow(n));
+    println!("{}", 1 << n);
 }

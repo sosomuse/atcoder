@@ -18,17 +18,13 @@ fn main() {
         v.sort();
     }
 
-    let mut c = 0;
-
     for i in 0..n {
         let p = i % k;
         let v = vec[p][i / k];
-        if c > v {
+        if i > v {
             println!("No");
             return;
         }
-
-        c = v;
     }
 
     println!("Yes");

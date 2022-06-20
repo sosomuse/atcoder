@@ -9,17 +9,17 @@ fn main() {
 fn fnc(n: usize) -> Vec<usize> {
     let mut lst: Vec<usize> = vec![];
 
-    let mut count = 1;
+    let mut i = 1;
 
-    while count * count <= n {
-        if n % count == 0 {
-            lst.push(count);
-            if count != n / count {
-                lst.push(n / count);
+    while i * i <= n {
+        if n % i == 0 {
+            lst.push(i);
+            if i != n / i {
+                lst.push(n / i);
             }
         }
 
-        count += 1;
+        i += 1;
     }
 
     lst

@@ -4,7 +4,7 @@ fn main() {
     println!("{}", a);
 
     // 最小公倍数
-    let a = icm(4, 6);
+    let a = icm(6, 4);
     println!("{}", a);
 
     // 総和
@@ -13,7 +13,7 @@ fn main() {
 
     // 二分探索
     let vec = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    let a = binary_search(&vec, 6);
+    let a = binary_search(&vec, 4);
     println!("{}", a);
     let a = vec.binary_search(&6).unwrap_or_else(|i| i);
     println!("{}", a);
@@ -76,8 +76,8 @@ fn sigma(l: usize, r: usize) -> usize {
 
 // 二項係数
 // n個の中からk個のモノを選ぶ組み合わせの数
-fn binomial(n: usize, k: usize) -> usize {
-    let mut ret = 1;
+fn binomial(n: isize, k: isize) -> isize {
+    let mut ret: isize = 1;
     for i in 0..k {
         ret *= n - i;
         ret /= i + 1;
@@ -85,4 +85,3 @@ fn binomial(n: usize, k: usize) -> usize {
 
     return ret;
 }
-

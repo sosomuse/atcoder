@@ -6,6 +6,7 @@ fn main() {
     }
 }
 
+// O(√n)
 fn is_prime(n: usize) -> bool {
     let mut i = 2;
     while i * i <= n {

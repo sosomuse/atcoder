@@ -7,15 +7,19 @@ fn main() {
 
     let mut dp = vec![0; n + 1];
 
-    for i in 0..=n {
-        if i <= 1 {
+    for i in 0..n {
+        if i == 0 {
             dp[i] = 1;
-        } else {
+        }
+
+        if i == 1 {
+            dp[i] = dp[i - 1] + 1;
+        }
+
+        if i >= 2 {
             dp[i] = dp[i - 1] + dp[i - 2];
         }
     }
 
-    dbg!(&dp);
-
-    println!("{}", dp[n]);
+    println!("{}", dp[n - 1]);
 }

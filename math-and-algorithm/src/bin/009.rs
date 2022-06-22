@@ -4,21 +4,27 @@ fn main() {
     input! {
         n: usize,
         s: usize,
-        a: [usize; n],
     }
 
-    let mut dp = vec![vec![0; n + 1]; n + 1];
+    let mut vec = vec![false; s + 1];
+    vec[0] = true;
 
-    for i in 1..=n {
-        for j in 0..n {
-            let v = a[j];
-
-            dp[i][j] = dp[i - 1][j] + v;
+    for _ in 0..n {
+        input! {
+            a: usize,
+        }
+        if a <= s {
+            for j in (0..(s - a + 1)).rev() {
+                if vec[j] {
+                    vec[j + a] = true
+                }
+            }
         }
     }
 
-    dbg!(&dp);
-    dbg!(&s);
-
-    println!("1")
+    if vec[s] {
+        println!("Yes");
+    } else {
+        println!("No");
+    }
 }

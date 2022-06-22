@@ -3,20 +3,15 @@ use proconio::input;
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        x: usize,
+        mut a: [usize; n],
     }
 
-    let mut dp = vec![vec![0; n + 1]; n + 1];
+    a.sort();
+    let ans = a.binary_search(&x);
 
-    for i in 1..=n {
-        for j in 0..n {
-            let v = a[j];
-
-            dp[i][j] = dp[i - 1][j] + v;
-        }
+    match ans {
+        Ok(_) => println!("Yes"),
+        Err(_) => println!("No"),
     }
-
-    dbg!(&dp);
-
-    println!("1")
 }

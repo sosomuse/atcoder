@@ -6,17 +6,19 @@ fn main() {
         a: [usize; n],
     }
 
-    let mut dp = vec![vec![0; n + 1]; n + 1];
+    let mut dp = vec![0; n + 1];
 
     for i in 1..=n {
-        for j in 0..n {
-            let v = a[j];
+        let v = a[i - 1];
 
-            dp[i][j] = dp[i - 1][j] + v;
+        if i == 1 {
+            dp[i] = v;
+        }
+
+        if i >= 2 {
+            dp[i] = (dp[i - 1]).max(dp[i - 2] + v);
         }
     }
 
-    dbg!(&dp);
-
-    println!("1")
+    println!("{}", dp[n]);
 }

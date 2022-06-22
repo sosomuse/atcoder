@@ -1,19 +1,15 @@
 use proconio::input;
-use std::f64::consts::PI;
 
 fn main() {
     input! {
-        a: f64,
-        b: f64,
-        h: f64,
-        m: f64
+        (x1, y1): (isize, isize),
+        (x2, y2): (isize, isize),
+        (x3, y3): (isize, isize),
+        (x4, y4): (isize, isize),
     }
 
-    let rh = ((h / 12.0) + (m / 60.0 / 12.0)) * 2.0 * PI;
-    let rm = m / 60.0 * 2.0 * PI;
-    let dhm = rm - rh;
-
-    let x2 = a.powf(2.) + b.powf(2.) - 2.0 * a * b * dhm.cos();
-
-    println!("{}", x2.sqrt())
+    println!(
+        "{}",
+        x1 * y2 + x2 * y3 + x3 * y4 + x4 * y1 - x1 * y4 - x2 * y1 - x3 * y2 - x4 * y3
+    );
 }

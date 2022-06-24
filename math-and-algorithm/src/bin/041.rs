@@ -16,14 +16,10 @@ fn main() {
 
     for i in 0..t {
         if i == 0 {
-            continue;
+            println!("{}", vec[i]);
         } else {
             vec[i] = vec[i - 1] + vec[i];
+            println!("{}", vec[i]);
         }
-    }
-
-    for i in 0..t {
-        let v = vec[i];
-        println!("{}", v);
     }
 }

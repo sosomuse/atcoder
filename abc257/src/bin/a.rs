@@ -2,8 +2,15 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: u32,
+        n: usize,
+        x: usize,
     }
 
-    println!("{}", 1 << n);
+    let mut s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".to_string();
+    s = s.repeat(n);
+
+    let mut it: Vec<char> = s.chars().collect();
+    it.sort();
+
+    println!("{}", it[x - 1]);
 }

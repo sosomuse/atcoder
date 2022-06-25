@@ -6,11 +6,19 @@ fn main() {
         b: usize,
     }
 
+    println!("{}", modpow(a, b, 1000000007));
+}
+
+fn modpow(a: usize, b: usize, m: usize) -> usize {
+    let mut p = a;
     let mut ans = 1;
 
-    for _ in 0..b {
-        ans = ans * a % 1000000007;
+    for i in 0..30 {
+        if b & (1 << i) != 0 {
+            ans = ans * p % m;
+        }
+        p = p * p % m;
     }
 
-    println!("{}", ans);
+    ans
 }

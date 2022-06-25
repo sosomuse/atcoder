@@ -13,6 +13,7 @@ fn main() {
 }
 
 // initial_v=start
+// スタートからつながっている経路を全て ans に追加
 fn dfs(v: usize, g: &Vec<Vec<usize>>, visited: &mut Vec<bool>, ans: &mut Vec<usize>) {
     visited[v] = true;
     ans.push(v);
@@ -25,6 +26,7 @@ fn dfs(v: usize, g: &Vec<Vec<usize>>, visited: &mut Vec<bool>, ans: &mut Vec<usi
 }
 
 // initial_v=start
+// スタートからの最短経路を ans に追加
 fn bfs(v: usize, g: &Vec<Vec<usize>>, visited: &mut Vec<bool>, ans: &mut Vec<usize>) {
     let mut queue: Vec<usize> = vec![v];
     visited[v] = true;

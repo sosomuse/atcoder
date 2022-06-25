@@ -6,4 +6,17 @@ fn main() {
         x: isize,
         y: isize,
     }
+
+    let sum = (x.abs() + y.abs()) as usize;
+
+    if sum > n {
+        println!("No");
+        return;
+    }
+
+    if n % 2 == sum % 2 {
+        println!("Yes");
+    } else {
+        println!("No");
+    }
 }

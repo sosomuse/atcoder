@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: u32,
+    }
+
+    println!("{}", 1 << n);
 }

@@ -1,23 +1,39 @@
 use proconio::input;
+use proconio::source::line::LineSource;
+use std::io;
+use std::io::{stdin, BufReader, Write};
 
 fn main() {
+    let stdin = stdin();
+    let mut s = LineSource::new(BufReader::new(stdin.lock()));
     input! {
-        n: usize,
+        from &mut s,
+        n: usize
     }
 
     let mut vec: Vec<usize> = vec![];
 
-    for i in 1..=n {
+    for i in 1..=2 * n + 1 {
         vec.push(i);
     }
 
-    while vec.len() > 0 {
+    loop {
         println!("{}", vec[0]);
+        io::stdout().flush().unwrap();
 
         input! {
+            from &mut s,
             o: usize,
         };
 
-        vec.remove(o);
+        if o == 0 {
+            break;
+        }
+
+        vec = vec
+            .iter()
+            .filter(|&x| *x != o && vec[0] != *x)
+            .map(|&x| x)
+            .collect();
     }
 }

@@ -6,7 +6,25 @@ fn main() {
         a: [usize; n],
     };
 
-    // mod取ること
-    // 自分だけを選ぶパターン（aのsum）
-    // 自分が最大のパターン 1.2.3.4 1.4 2.4 3,4 1,2,4 1,3,4 2,3,4 1,2,3,4
+    let mut ans = 0;
+    let mut _mod = 1000000007;
+
+    for i in 0..n {
+        let v = a[i];
+        ans += (v * mod_pow(2, i, _mod)) % _mod;
+    }
+
+    println!("{}", ans % _mod);
+}
+
+fn mod_pow(a: usize, b: usize, m: usize) -> usize {
+    let mut r = 1;
+    let mut p = a;
+    for i in 0..64 {
+        if (b >> i) & 1 == 1 {
+            r = r * p % m;
+        }
+        p = p * p % m;
+    }
+    r
 }

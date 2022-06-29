@@ -10,10 +10,10 @@ fn main() {
     let mut current_t = 0;
     let mut ans = 0;
 
-    for (l, _) in lr {
-        if current_t < l {
+    for (l, r) in lr {
+        if current_t <= l {
             ans += 1;
-            current_t = l;
+            current_t = r;
         }
     }
 

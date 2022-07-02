@@ -1,5 +1,3 @@
-use std::collections::VecDeque;
-
 use proconio::{input, marker::Chars};
 
 fn main() {
@@ -9,12 +7,6 @@ fn main() {
         mut s: Chars,
     };
 
-    let mut queue = VecDeque::new();
-
-    for v in s {
-        queue.push_back(v);
-    }
-
     for _ in 0..q {
         input! {
             t: usize,
@@ -23,15 +15,13 @@ fn main() {
 
         match t {
             1 => {
-                let m = x % queue.len();
-                for _ in 0..m {
-                    let v = queue.swap_remove_back(queue.len() - 1).unwrap();
-                    queue.push_front(v);
-                }
-                // dbg!(&queue);
+                let m = x % s.len();
+                let mut drained = s.split_off(s.len() - m);
+                drained.append(&mut s);
+                s = drained;
             }
             2 => {
-                println!("{}", queue[x - 1]);
+                println!("{}", s[x - 1]);
             }
             _ => unimplemented!(),
         }

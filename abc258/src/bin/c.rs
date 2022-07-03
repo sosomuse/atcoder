@@ -2,26 +2,27 @@ use proconio::{input, marker::Chars};
 
 fn main() {
     input! {
-        _: usize,
+        n: isize,
         q: usize,
         mut s: Chars,
     };
 
+    let mut count = 0;
+
     for _ in 0..q {
         input! {
             t: usize,
-            x: usize,
+            x: isize,
         };
 
         match t {
             1 => {
-                let m = x % s.len();
-                let mut drained = s.split_off(s.len() - m);
-                drained.append(&mut s);
-                s = drained;
+                count += x;
             }
             2 => {
-                println!("{}", s[x - 1]);
+                let v = count % n;
+                // dbg!(x, v);
+                println!("{}", s[((n + x - v - 1) % n) as usize]);
             }
             _ => unimplemented!(),
         }

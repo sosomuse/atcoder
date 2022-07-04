@@ -7,15 +7,15 @@ fn main() {
         q: usize
     };
 
-    let mut vec = vec![vec![0; n]; 2];
+    let mut vec = vec![vec![0; n + 1]; 2];
 
     for (i, (c, p)) in cp.iter().enumerate() {
         if *c == 1 {
-            vec[0][i] = vec[0][(i as isize - 1).max(0) as usize] + *p;
-            vec[1][i] = vec[1][(i as isize - 1).max(0) as usize];
+            vec[0][i + 1] = vec[0][i] + *p;
+            vec[1][i + 1] = vec[1][i];
         } else {
-            vec[1][i] = vec[1][(i as isize - 1).max(0) as usize] + *p;
-            vec[0][i] = vec[0][(i as isize - 1).max(0) as usize];
+            vec[1][i + 1] = vec[1][i] + *p;
+            vec[0][i + 1] = vec[0][i];
         }
     }
 
@@ -25,8 +25,8 @@ fn main() {
             r: usize,
         };
 
-        let ans_1 = vec[0][r - 1] - vec[0][(l as isize - 2).max(0) as usize];
-        let ans_2 = vec[1][r - 1] - vec[1][(l as isize - 2).max(0) as usize];
+        let ans_1 = vec[0][r] - vec[0][(l - 1)];
+        let ans_2 = vec[1][r] - vec[1][(l - 1)];
 
         println!("{} {}", ans_1, ans_2);
     }

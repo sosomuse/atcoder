@@ -7,46 +7,35 @@ fn main() {
     };
 
     let mut ans = 0;
-    let mut primes = vec![true; r - l + 1];
+    let mut vec: Vec<usize> = vec![];
+
+    for i in l..=r {
+        vec.push(i);
+    }
 
     let mut i = 3;
     while i * i <= l {
-        for j in l..=r {
-            if j == 1 {
-                primes[j - l] = false;
+        let len = vec.len();
+        for (i, v) in vec.iter_mut().enumerate() {
+            // let v = vec[0];
+            if *v == 1 {
+                ans += 1;
                 continue;
             }
-            if j == 2 {
-                primes[j - l] = true;
+            if *v == 2 {
+                vec.remove(i);
+                ans += 1;
                 continue;
             }
-            if j % i == 0 {
-                primes[j - l] = false;
+            if *v % i == 0 {
+                vec.remove(i);
                 continue;
             }
         }
         i += 2;
     }
+
+    dbg!(&vec);
 
     println!("{}", ans);
-}
-
-fn is_prime(n: usize) -> bool {
-    if n == 1 {
-        return false;
-    }
-    if n == 2 {
-        return true;
-    }
-    if n % 2 == 0 {
-        return false;
-    }
-    let mut i = 3;
-    while i * i <= n {
-        if n % i == 0 {
-            return false;
-        }
-        i += 2;
-    }
-    true
 }

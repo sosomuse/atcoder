@@ -2,34 +2,17 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: u32,
-        a: [u32; n],
+        n: usize,
+        x: usize,
+        ab: [(usize, usize); n],
+    };
+
+    let mut dp = vec![vec![false; x]; n];
+    dp[0][0] = true;
+
+    for i in 0..n {
+        let (a, b) = ab[i];
     }
 
-    let mut p = 0;
-    let mut v: Vec<u32> = vec![];
-
-    for t in a {
-        let x = p + t;
-        if x >= 360 {
-            p = x - 360;
-            v.push(p);
-        } else {
-            p += t;
-            v.push(p);
-        }
-    }
-
-    v.sort();
-    v.reverse();
-
-    let mut prev = 360;
-    let mut ans = 0;
-
-    for t in v {
-        ans = ans.max(prev - t);
-        prev = t;
-    }
-
-    println!("{}", ans);
+    println!("{}", dp[0][0]);
 }

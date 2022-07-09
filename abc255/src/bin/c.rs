@@ -3,8 +3,8 @@ use proconio::input;
 fn main() {
     input! {
         x: i64,
-        a: i64,
-        d: i64,
+        mut a: i64,
+        mut d: i64,
         n: i64,
     }
 
@@ -13,17 +13,24 @@ fn main() {
         return;
     }
 
-    let m = a + d * (n - 1);
-    let mut ans = (a - x).abs().min((m - x).abs());
-    let y = a + (x - a);
-
-    for i in -2..3 {
-        let z = y + i * d;
-        if a <= z && z <= m || m <= z && z <= a {
-            dbg!(z, x);
-            ans = ans.min((z - x).abs());
-        }
+    if d < 0 {
+        a = a + d * (n - 1);
+        d = -d;
     }
+
+    let i = (x - a) / d;
+    let f = |mut f: i64| {
+        if f < 0 {
+            f = 0;
+        }
+        if i >= n {
+            f = n - 1_i64;
+        }
+        a + d * f
+    };
+
+    let mut ans = (f(i) - x).abs();
+    ans = ans.min((f(i + 1) - x).abs());
 
     println!("{}", ans);
 }

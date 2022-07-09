@@ -2,9 +2,19 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: usize,
-        a: [usize; n],
+        _: usize,
+        m: usize,
+        x: usize,
+        t: usize,
+        d: usize,
     };
 
-    println!("{}", a.iter().sum::<usize>());
+    if m >= x {
+        println!("{}", t);
+        return;
+    }
+
+    let v = x - m;
+
+    println!("{}", t - v * d);
 }

@@ -2,9 +2,6 @@ use std::collections::BTreeSet;
 
 use proconio::input;
 
-// #![feature(repr128)]
-
-// #[repr(u128)] // ok!
 fn main() {
     input! {
         n: usize,

@@ -5,17 +5,28 @@ fn main() {
         n: f64,
     };
 
-    let x = n.powf(0.333334) as usize;
+    if n < 10. {
+        println!("{}", 0);
+        return;
+    }
+
+    let x = (n / 2.0).powf(0.333334) as usize;
     let primes = solve(x);
     let mut ans = 0;
 
     for i in 0..primes.len() {
         let v = primes[i];
 
+        if v > n.powf(0.25) as usize {
+            break;
+        }
+
         for j in i + 1..primes.len() {
             let w = primes[j];
-            if v * w * w <= n as usize / w {
+            if (v * w * w) as f64 <= n / w as f64 {
                 ans += 1;
+            } else {
+                break;
             }
         }
     }

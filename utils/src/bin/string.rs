@@ -21,6 +21,4 @@ fn main() {
 
     println!("{}", n1);
     println!("{}", n2);
-    
-
 }

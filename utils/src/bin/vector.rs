@@ -35,10 +35,10 @@ fn main() {
     println!("{}", max);
     println!("{}", min);
 
-    // sort（大きい順）
+    // sort（昇順）
     a.sort();
 
-    // sort_by（小さい順）
+    // sort_by（降順）
     a.sort_by(|s, t| t.cmp(s));
 
     // 数値を文字列に変換して空白区切りで出力

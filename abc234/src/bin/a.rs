@@ -2,14 +2,12 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: usize,
-        k: usize,
-        mut p: [usize; n],
+        t: usize,
     };
 
-    p.sort();
+    println!("{}", f(f(f(t) + t) + f(f(t))));
+}
 
-    for i in k - 1..n {
-        println!("{}", p[i]);
-    }
+fn f(x: usize) -> usize {
+    x * x + 2 * x + 3
 }

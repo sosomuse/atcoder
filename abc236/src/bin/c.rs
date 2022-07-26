@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::HashSet;
 
 use proconio::input;
 
@@ -10,14 +10,14 @@ fn main() {
         t: [String; m],
     }
 
-    let mut map = HashMap::<String, bool>::new();
+    let mut set = HashSet::<String>::new();
 
     for v in t.iter() {
-        map.insert(v.to_string(), true);
+        set.insert(v.to_string());
     }
 
     for v in s.iter() {
-        if map.contains_key(v) {
+        if set.contains(v) {
             println!("Yes");
         } else {
             println!("No");

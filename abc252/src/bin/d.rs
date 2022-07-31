@@ -1,48 +1,32 @@
-use std::collections::HashMap;
-
 use proconio::input;
+use std::collections::HashMap;
 
 fn main() {
     input! {
         n: usize,
-        mut a: [usize; n],
-    };
-
-    a.sort();
-
-    let mut map = HashMap::<usize, usize>::new();
-    let mut ans = 0;
-    let mut cnt = 0;
-
-    for i in 0..n {
-        let v = a[i];
-        *map.entry(v).or_insert(0) += 1;
+        a: [usize; n]
     }
 
-    dbg!(ncr(4, 2));
+    let mut cnt = HashMap::new();
 
-    for _ in 0..map.keys().len() - 2 {
-        let v = a[cnt];
+    for a in a.iter() {
+        *cnt.entry(a).or_insert(0) += 1;
+    }
 
-        let c = *map.get(&v).unwrap_or(&1);
+    if cnt.len() < 3 {
+        println!("0");
+        return;
+    }
 
-        dbg!(ans);
+    let mut ans = 0;
+    let mut before = 0;
+    let mut after = n;
 
-        ans += ncr(n - cnt - c, 2) * c;
-        cnt += c;
+    for c in cnt.values() {
+        after -= c;
+        ans += before * c * after;
+        before += c;
     }
 
     println!("{}", ans);
-}
-
-fn ncr(n: usize, r: usize) -> usize {
-    let mut _n = 1;
-    let mut _r = 1;
-
-    for i in 0..r {
-        _n *= n - i;
-        _r *= i + 1;
-    }
-
-    _n / _r
 }

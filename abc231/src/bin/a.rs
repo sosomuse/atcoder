@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        d: f64,
+    };
+
+    println!("{}", d / 100.);
 }

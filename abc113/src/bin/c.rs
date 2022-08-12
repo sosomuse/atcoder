@@ -16,9 +16,7 @@ fn main() {
         v.push(y);
     }
 
-    for v in map.values_mut() {
-        v.sort();
-    }
+    map.values_mut().for_each(|v| v.sort());
 
     for &(p, y) in &py {
         let v = map.get(&p).unwrap();

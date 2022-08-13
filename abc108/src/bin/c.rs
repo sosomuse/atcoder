@@ -6,7 +6,7 @@ fn main() {
         k: usize,
     };
 
-    let mut m = 0;
+    let mut m: usize = 0;
 
     for i in 1..=n {
         if i % k == 0 {

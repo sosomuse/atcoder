@@ -1,3 +1,12 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        l: usize,
+        r: usize,
+    };
+
+    let s = String::from("atcoder");
+
+    println!("{}", s[l - 1..r].to_string());
 }

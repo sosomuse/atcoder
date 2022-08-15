@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use proconio::input;
 
 fn main() {
@@ -8,7 +6,7 @@ fn main() {
         x: usize,
     };
 
-    let mut map = HashMap::<usize, usize>::new();
+    let mut vec: Vec<Vec<usize>> = vec![];
 
     for _ in 0..n {
         input! {
@@ -16,30 +14,31 @@ fn main() {
             a: [usize; l],
         };
 
-        for &a in a.iter() {
-            *map.entry(a).or_insert(0) += 1;
-        }
+        vec.push(a);
     }
 
-    let mut ans = 0;
-
-    for (k, v) in map.iter() {
-        if x % k != 0 {
-            continue;
-        }
-
-        let m = x / k;
-
-        let n = map.get(&m);
-
-        match n {
-            Some(t) => {
-                dbg!(k, m, t);
-                ans += t * v;
-            }
-            None => {}
-        }
-    }
+    let ans = dfs(0, &vec, n, x);
 
     println!("{}", ans);
+}
+
+fn dfs(p: usize, vec: &Vec<Vec<usize>>, n: usize, x: usize) -> usize {
+    let mut ans = 0;
+    dfs_inner(p, vec, 1, &mut ans, n, x);
+    ans
+}
+
+fn dfs_inner(p: usize, vec: &Vec<Vec<usize>>, sum: usize, ans: &mut usize, n: usize, x: usize) {
+    if p == n {
+        if sum == x {
+            *ans += 1;
+        }
+        return;
+    }
+    for v in vec[p].iter() {
+        if sum > x / v {
+            continue;
+        }
+        dfs_inner(p + 1, vec, sum * v, ans, n, x)
+    }
 }

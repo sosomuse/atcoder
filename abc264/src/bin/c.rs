@@ -1,3 +1,4 @@
+use itertools::Itertools;
 use proconio::input;
 
 fn main() {
@@ -21,36 +22,37 @@ fn main() {
         true
     };
 
-    for bit1 in 0..1 << h1 {
-        for bit2 in 0..1 << w1 {
-            let mut is: Vec<usize> = vec![];
-            let mut js: Vec<usize> = vec![];
+    let h_diff = h1 - h2;
+    let w_diff = w1 - w2;
 
-            for i in 0..h1 {
-                if bit1 >> i & 1 == 1 {
-                    is.push(i);
+    let mut cmb_h = (1..=h1).combinations(h_diff).collect::<Vec<Vec<usize>>>();
+    let mut cmb_w = (1..=w1).combinations(w_diff).collect::<Vec<Vec<usize>>>();
+
+    for v in cmb_h.iter_mut() {
+        v.sort_by(|a, b| b.cmp(a));
+    }
+
+    for v in cmb_w.iter_mut() {
+        v.sort_by(|a, b| b.cmp(a));
+    }
+
+    for h in cmb_h {
+        let mut c = a.clone();
+
+        for v in h {
+            c.remove(v - 1);
+        }
+
+        for w in cmb_w.iter() {
+            let mut d = c.clone();
+
+            for v in w {
+                for i in 0..d.len() {
+                    d[i].remove(v - 1);
                 }
             }
 
-            for j in 0..w1 {
-                if bit2 >> j & 1 == 1 {
-                    js.push(j);
-                }
-            }
-
-            if is.len() != h2 || js.len() != w2 {
-                continue;
-            }
-
-            let mut c: Vec<Vec<usize>> = vec![vec![0; w2]; h2];
-
-            for i in 0..h2 {
-                for j in 0..w2 {
-                    c[i][j] = a[is[i]][js[j]];
-                }
-            }
-
-            if is_same(&c, &b) {
+            if is_same(&d, &b) {
                 println!("Yes");
                 return;
             }

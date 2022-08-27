@@ -1,3 +1,4 @@
+use itertools::Itertools;
 use proconio::input;
 
 fn main() {
@@ -8,55 +9,35 @@ fn main() {
         xy: [(usize, usize); m],
     };
 
-    let mut ans: usize = 10000000000;
-    let mut graph: Vec<Vec<usize>> = vec![vec![]; n + 1];
-
-    for i in 1..=n {
-        for j in 1..=n {
-            if i == j {
-                continue;
-            }
-            graph[i].push(j);
-        }
-    }
+    let mut ans = 1000000000;
+    let mut graph: Vec<Vec<usize>> = vec![vec![]; n];
 
     for i in 0..m {
-        graph[xy[i].0].retain(|&y| y != xy[i].1);
-        graph[xy[i].1].retain(|&y| y != xy[i].0);
+        graph[xy[i].0 - 1].push(xy[i].1 - 1);
+        graph[xy[i].1 - 1].push(xy[i].0 - 1);
     }
 
-    dbg!(&graph);
+    let cmb = (0..n).permutations(n).collect::<Vec<Vec<usize>>>();
 
-    for i in 1..=n {
-        let v = dfs(i, &graph);
+    for vec in cmb.iter() {
+        let mut count = 0;
+        let mut is_ok = true;
 
-        let mut tmp = 0;
+        for i in 0..vec.len() {
+            if i + 1 < vec.len() {
+                if graph[vec[i]].contains(&vec[i + 1]) {
+                    is_ok = false;
+                    break;
+                }
+            }
 
-        for j in 0..v.len() {
-            tmp += a[v[j] - 1][j];
+            count += a[vec[i]][i];
         }
-        // dbg!(&v, &tmp);
 
-        ans = ans.min(tmp);
-    }
-
-    println!("{}", ans);
-}
-
-fn dfs(v: usize, graph: &Vec<Vec<usize>>) -> Vec<usize> {
-    let mut visited: Vec<bool> = vec![false; graph.len()];
-    let mut ans: Vec<usize> = vec![];
-    dfs_inner(v, graph, &mut visited, &mut ans);
-    ans
-}
-
-fn dfs_inner(v: usize, graph: &Vec<Vec<usize>>, visited: &mut Vec<bool>, ans: &mut Vec<usize>) {
-    visited[v] = true;
-    ans.push(v);
-
-    for &w in graph[v].iter() {
-        if !visited[w] {
-            dfs_inner(w, graph, visited, ans);
+        if is_ok {
+            ans = ans.min(count);
         }
     }
+
+    println!("{}", if ans == 1000000000 { -1 } else { ans as isize });
 }

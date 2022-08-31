@@ -1,7 +1,5 @@
 use proconio::input;
 
-use itertools::Itertools;
-
 fn main() {
     input! {
         n: usize,
@@ -10,13 +8,19 @@ fn main() {
         a: [usize; n],
     };
 
-    let cmb = (0..n).combinations(5).collect::<Vec<Vec<usize>>>();
     let mut ans: usize = 0;
 
-    for vec in cmb.iter() {
-        let prd = vec.iter().map(|&i| a[i]).product::<usize>();
-        if prd % p == q {
-            ans += 1;
+    for i in 0..n {
+        for j in i + 1..n {
+            for k in j + 1..n {
+                for l in k + 1..n {
+                    for m in l + 1..n {
+                        if a[i] * a[j] % p * a[k] % p * a[l] % p * a[m] % p == q {
+                            ans += 1;
+                        }
+                    }
+                }
+            }
         }
     }
 

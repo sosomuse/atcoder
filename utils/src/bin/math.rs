@@ -4,6 +4,18 @@ fn main() {
 
     let ans = ncr(100, 3);
     println!("{}", ans);
+
+    let ans = convert_string(18, 2);
+    println!("{}", ans);
+
+    let ans = convert_string(18, 8);
+    println!("{}", ans);
+
+    let ans = u64::from_str_radix("10010", 2).unwrap();
+    println!("{}", ans);
+
+    let ans = u64::from_str_radix("22", 8).unwrap();
+    println!("{}", ans);
 }
 
 // 回転行列
@@ -26,4 +38,21 @@ fn ncr(n: usize, r: usize) -> usize {
     }
 
     _n / _r
+}
+
+fn convert_string(mut n: u64, base: u64) -> String {
+    let mut ans = vec![];
+    loop {
+        let a = n % base;
+        let b = n / base;
+
+        ans.push(format!("{}", a));
+        if b == 0 {
+            break;
+        }
+        n = b;
+    }
+
+    ans.reverse();
+    ans.join("")
 }

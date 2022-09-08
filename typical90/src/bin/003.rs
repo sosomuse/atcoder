@@ -1,36 +1,44 @@
+use std::collections::VecDeque;
+
 use proconio::{input, marker::Usize1};
 fn main() {
     input! {
         n: usize,
         e: [(Usize1, Usize1); n - 1],
     }
-    let mut g = vec![vec![]; n];
+    let mut graph = vec![vec![]; n];
     for (a, b) in e {
-        g[a].push(b);
-        g[b].push(a);
+        graph[a].push(b);
+        graph[b].push(a);
     }
-    let mut dist = vec![n; n];
-    dist[0] = 0;
-    let mut m = 0;
-    let mut mi = 0;
-    dfs(0, &g, &mut dist, &mut m, &mut mi);
-    let mut dist = vec![n; n];
-    dist[mi] = 0;
-    let mut m = 0;
-    dfs(mi, &g, &mut dist, &mut m, &mut mi);
-    println!("{}", m + 1)
+
+    let ans = bfs(0, &graph);
+    let max = ans.iter().max().unwrap();
+    let max_i = ans.iter().position(|&x| x == *max).unwrap();
+    let ans = bfs(max_i as usize, &graph);
+    let max = ans.iter().max().unwrap();
+
+    println!("{}", max + 1)
 }
 
-fn dfs(v: usize, g: &[Vec<usize>], dist: &mut [usize], m: &mut usize, mi: &mut usize) {
-    for &nv in g[v].iter() {
-        if dist[nv] != dist.len() {
-            continue;
+fn bfs(v: usize, graph: &Vec<Vec<usize>>) -> Vec<isize> {
+    let mut dist: Vec<isize> = vec![-1; graph.len()];
+    let mut queue: VecDeque<usize> = std::collections::VecDeque::new();
+    queue.push_front(v);
+    dist[v] = 0;
+
+    while !queue.is_empty() {
+        let pos = *queue.front().unwrap();
+        queue.pop_front().unwrap();
+
+        for i in 0..graph[pos].len() {
+            let nex = graph[pos][i];
+            if dist[nex] == -1 {
+                dist[nex] = dist[pos] + 1;
+                queue.push_back(nex);
+            }
         }
-        dist[nv] = dist[v] + 1;
-        if *m < dist[nv] {
-            *m = dist[nv];
-            *mi = nv;
-        }
-        dfs(nv, g, dist, m, mi);
     }
+
+    dist
 }

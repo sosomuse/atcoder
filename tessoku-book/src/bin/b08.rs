@@ -18,7 +18,7 @@ fn main() {
 
     for i in 0..max_x {
         for j in 0..max_y {
-            s[i + 1][j + 1] += s[i + 1][j];
+            s[i + 1][j + 1] += s[i + 1][j] + s[i][j + 1] - s[i][j];
         }
     }
 
@@ -30,12 +30,8 @@ fn main() {
             d: usize,
         };
 
-        let mut sum = 0;
+        let t = s[c][d] - s[c][b - 1] - s[a - 1][d] + s[a - 1][b - 1];
 
-        for i in a..=c {
-            sum += s[i][d] - s[i][b - 1];
-        }
-
-        println!("{}", sum);
+        println!("{}", t);
     }
 }

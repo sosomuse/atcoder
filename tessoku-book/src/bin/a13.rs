@@ -17,7 +17,7 @@ fn main() {
         }
 
         while r[i] < n && a[r[i]] - a[i - 1] <= k {
-            r[i] = 1;
+            r[i] += 1;
         }
     }
 

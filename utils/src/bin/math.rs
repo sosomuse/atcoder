@@ -16,6 +16,9 @@ fn main() {
 
     let ans = u64::from_str_radix("22", 8).unwrap();
     println!("{}", ans);
+
+    let ans = power(2, 8, 1000000007);
+    println!("{}", ans);
 }
 
 // 回転行列
@@ -55,4 +58,21 @@ fn convert_string(mut n: u64, base: u64) -> String {
 
     ans.reverse();
     ans.join("")
+}
+
+// 繰り返し二乗法（累乗）
+fn power(a: usize, b: usize, m: usize) -> usize {
+    let mut p = a;
+    let mut ans = 1;
+
+    // bの制約によって変更する b < 2^30
+    for i in 0..30 {
+        let w = 1 << i;
+        if (b & w) != 0 {
+            ans = ans * p % m;
+        }
+        p = p * p % m;
+    }
+
+    ans
 }

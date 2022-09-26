@@ -1,3 +1,13 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+    };
+
+    let x = n / 3;
+    let y = n / 5;
+    let z = n / (3 * 5);
+
+    println!("{}", x + y - z);
 }

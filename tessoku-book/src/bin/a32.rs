@@ -7,9 +7,14 @@ fn main() {
         b: usize,
     };
 
-    if n % (a + b) == 0 {
-        println!("Second");
-    } else {
+    let min = a.min(b);
+
+    let x = (n - a) % (a + b);
+    let y = (n - b) % (a + b);
+
+    if x < min || y < min {
         println!("First");
+    } else {
+        println!("Second");
     }
 }

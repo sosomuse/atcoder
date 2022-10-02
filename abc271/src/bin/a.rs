@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: u8,
+    };
+
+    println!("{:02X}", n);
 }

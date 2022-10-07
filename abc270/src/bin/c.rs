@@ -24,10 +24,11 @@ fn main() {
     }
 }
 
-fn dfs(v: usize, graph: &Vec<Vec<usize>>, t: usize) -> VecDeque<usize> {
+fn dfs(v: usize, graph: &Vec<Vec<usize>>, y: usize) -> VecDeque<usize> {
     let mut visited: Vec<bool> = vec![false; graph.len()];
     let mut ans: VecDeque<usize> = VecDeque::new();
-    dfs_inner(v, graph, &mut visited, &mut ans, t, 0);
+    let mut stop = false;
+    dfs_inner(v, graph, &mut visited, &mut ans, y, &mut stop);
     ans
 }
 
@@ -37,41 +38,30 @@ fn dfs_inner(
     visited: &mut Vec<bool>,
     ans: &mut VecDeque<usize>,
     t: usize,
-    c: usize,
+    stop: &mut bool,
 ) {
+    if *stop {
+        return;
+    }
+
     visited[v] = true;
     ans.push_back(v);
 
     if v == t {
+        *stop = true;
         return;
     }
 
     let next = &graph[v];
 
-    if ans.len() != 1 && next.len() == 1 {
-        for _ in 0..c {
-            ans.pop_back();
+    for w in next {
+        if !visited[*w] {
+            dfs_inner(*w, graph, visited, ans, t, stop);
         }
-
-        return;
     }
 
-    for &w in next {
-        if !visited[w] {
-            dfs_inner(
-                w,
-                graph,
-                visited,
-                ans,
-                t,
-                if next.len() > 2 {
-                    1
-                } else if next.len() == 2 {
-                    c + 1
-                } else {
-                    c
-                },
-            );
-        }
+    if !*stop {
+        ans.pop_back();
+        return;
     }
 }

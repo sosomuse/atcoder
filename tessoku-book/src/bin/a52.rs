@@ -7,7 +7,7 @@ fn main() {
         q: usize,
     };
 
-    let mut queue = VecDeque::new();
+    let mut deque = VecDeque::new();
 
     for _ in 0..q {
         input! {
@@ -18,11 +18,11 @@ fn main() {
             input! {
                 x: String,
             };
-            queue.push_back(x);
+            deque.push_back(x);
         } else if t == 2 {
-            println!("{}", queue.front().unwrap());
+            println!("{}", deque.front().unwrap());
         } else {
-            queue.pop_front().unwrap();
+            deque.pop_front().unwrap();
         }
     }
 }

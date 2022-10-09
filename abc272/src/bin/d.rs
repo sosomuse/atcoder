@@ -13,18 +13,10 @@ fn main() {
     let mut pos_list = Vec::new();
 
     for i in 1..=n {
-        let mut nx: isize = 0;
-        let mut ny: isize = 0;
-
         for j in 1..=n {
             if solve(1, 1, i as isize, j as isize) == m {
-                nx = i as isize;
-                ny = j as isize;
+                pos_list.push((j as isize - 1, i as isize - 1));
             }
-        }
-
-        if nx != 0 && ny != 0 {
-            pos_list.push((nx as isize - 1, ny as isize - 1));
         }
     }
 
@@ -32,8 +24,6 @@ fn main() {
     deque.push_back(vec![(0, 0)]);
 
     let mut count = 1;
-
-    // dbg!(&pos_list);
 
     while !deque.is_empty() {
         let t_vec = deque.pop_front().unwrap();

@@ -1,5 +1,5 @@
 use proconio::input;
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BinaryHeap, HashMap};
 
 fn main() {
     input! {
@@ -8,38 +8,26 @@ fn main() {
         xy: [(usize, usize); n],
     };
 
-    let mut origin = HashMap::<usize, Vec<usize>>::new();
-    let mut map = BTreeMap::<usize, usize>::new();
-    let mut ans = 0;
+    let mut job_map = HashMap::new();
 
     for (x, y) in xy {
-        origin.entry(x).or_insert(vec![]).push(y);
+        job_map.entry(x).or_insert(vec![]).push(y);
     }
+
+    let mut heap = BinaryHeap::new();
+    let mut ans = 0;
 
     for i in 1..=d {
-        if let Some(v) = origin.get(&i) {
-            for j in v {
-                map.entry(*j).and_modify(|e| *e += 1).or_insert(1);
+        if let Some(v) = job_map.get(&i) {
+            for y in v {
+                heap.push(*y);
             }
         }
 
-        let mut remove = 0;
-
-        if let Some((x, y)) = map.iter_mut().max() {
-            if *y > 0 {
-                ans += x;
-                *y -= 1;
-
-                if *y == 0 {
-                    remove = *x;
-                }
-            }
-        }
-
-        if remove != 0 {
-            map.remove(&remove);
+        if let Some(z) = heap.pop() {
+            ans += z;
         }
     }
 
-    println!("{}", ans)
+    println!("{}", ans);
 }

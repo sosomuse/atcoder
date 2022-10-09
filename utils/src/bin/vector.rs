@@ -1,4 +1,6 @@
+use std::cmp::Reverse;
 use std::collections::BTreeMap;
+use std::collections::BinaryHeap;
 use std::collections::HashMap;
 use std::collections::HashSet;
 
@@ -56,4 +58,18 @@ fn main() {
     // 順列の列挙
     let perm = (1..=3).permutations(2).collect::<Vec<Vec<usize>>>();
     println!("{:?}", perm);
+
+    // 優先度付きキュー
+    let mut heap = std::collections::BinaryHeap::new();
+    heap.push(2);
+    heap.push(1);
+    println!("{}", heap.peek().unwrap());
+    println!("{}", heap.pop().unwrap());
+
+    // 逆順にする場合は Reverse(item) を用いる
+    let mut heap2 = std::collections::BinaryHeap::new();
+    heap2.push(Reverse(2));
+    heap2.push(Reverse(1));
+    println!("{}", heap.peek().unwrap());
+    println!("{}", heap.pop().unwrap());
 }

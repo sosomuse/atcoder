@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+        q: usize,
+        s: String,
+    };
 }

@@ -9,7 +9,7 @@ fn main() {
     };
 
     let mut vec: Vec<Vec<isize>> = vec![vec![-1; n]; n];
-    let mut deque: VecDeque<Vec<(isize, isize)>> = VecDeque::new();
+    let mut deque: VecDeque<(isize, isize)> = VecDeque::new();
     let mut pos_list = Vec::new();
 
     for i in 1..=n {
@@ -21,43 +21,34 @@ fn main() {
     }
 
     vec[0][0] = 0;
-    deque.push_back(vec![(0, 0)]);
+    deque.push_back((0, 0));
 
     while !deque.is_empty() {
-        let t_vec = deque.pop_front().unwrap();
-        let mut n_vec = vec![];
+        let (tx, ty) = deque.pop_front().unwrap();
 
-        for (tx, ty) in t_vec {
-            let mut pos = vec![];
+        let mut pos = vec![];
 
-            for (x, y) in pos_list.iter() {
-                pos.push((tx - x, ty - y));
-                pos.push((tx - x, ty + y));
-                pos.push((tx + x, ty - y));
-                pos.push((tx + x, ty + y));
-            }
-
-            for (nx, ny) in pos.iter() {
-                if *nx < 0 || n as isize <= *nx {
-                    continue;
-                }
-                if *ny < 0 || n as isize <= *ny {
-                    continue;
-                }
-
-                if vec[*nx as usize][*ny as usize] != -1 {
-                    continue;
-                }
-                vec[*nx as usize][*ny as usize] = vec[tx as usize][ty as usize] + 1;
-                n_vec.push((*nx, *ny));
-            }
+        for (x, y) in pos_list.iter() {
+            pos.push((tx - x, ty - y));
+            pos.push((tx - x, ty + y));
+            pos.push((tx + x, ty - y));
+            pos.push((tx + x, ty + y));
         }
 
-        if n_vec.is_empty() {
-            break;
-        }
+        for (nx, ny) in pos.iter() {
+            if *nx < 0 || n as isize <= *nx {
+                continue;
+            }
+            if *ny < 0 || n as isize <= *ny {
+                continue;
+            }
 
-        deque.push_back(n_vec);
+            if vec[*nx as usize][*ny as usize] != -1 {
+                continue;
+            }
+            vec[*nx as usize][*ny as usize] = vec[tx as usize][ty as usize] + 1;
+            deque.push_back((*nx, *ny));
+        }
     }
 
     for i in 0..n {

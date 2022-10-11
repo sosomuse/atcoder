@@ -23,8 +23,6 @@ fn main() {
     vec[0][0] = 0;
     deque.push_back(vec![(0, 0)]);
 
-    let mut count = 1;
-
     while !deque.is_empty() {
         let t_vec = deque.pop_front().unwrap();
         let mut n_vec = vec![];
@@ -37,10 +35,6 @@ fn main() {
                 pos.push((tx - x, ty + y));
                 pos.push((tx + x, ty - y));
                 pos.push((tx + x, ty + y));
-                pos.push((tx - y, ty - x));
-                pos.push((tx - y, ty + x));
-                pos.push((tx + y, ty - x));
-                pos.push((tx + y, ty + x));
             }
 
             for (nx, ny) in pos.iter() {
@@ -54,7 +48,7 @@ fn main() {
                 if vec[*nx as usize][*ny as usize] != -1 {
                     continue;
                 }
-                vec[*nx as usize][*ny as usize] = count;
+                vec[*nx as usize][*ny as usize] = vec[tx as usize][ty as usize] + 1;
                 n_vec.push((*nx, *ny));
             }
         }
@@ -64,7 +58,6 @@ fn main() {
         }
 
         deque.push_back(n_vec);
-        count += 1;
     }
 
     for i in 0..n {

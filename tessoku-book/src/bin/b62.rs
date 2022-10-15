@@ -16,13 +16,15 @@ fn main() {
         graph[b].push(a);
     }
 
-    let mut visited = vec![false; n];
+    let mut visited = vec![false; n + 1];
     let mut ans: VecDeque<usize> = VecDeque::new();
     let mut end = false;
 
+    // dbg!(&graph);
+
     dfs(&graph, &mut ans, &mut visited, 1, n, &mut end);
 
-    for i in 0..n {
+    for i in ans {
         print!("{} ", i);
     }
 }
@@ -38,12 +40,17 @@ fn dfs(
     visited[s] = true;
     ans.push_back(s);
 
+    if s == n {
+        *end = true;
+        return;
+    }
+
     if *end {
         return;
     }
 
     for v in graph[s].iter() {
-        if !visited[*v] {
+        if !visited[*v] && !*end {
             dfs(graph, ans, visited, *v, n, end);
 
             if !*end {

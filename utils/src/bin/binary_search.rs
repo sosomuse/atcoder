@@ -24,7 +24,7 @@ impl<T: Ord> BinarySearch<T> for [T] {
             }
         }
 
-        if self[low] >= *x {
+        if self.len() > low && self[low] >= *x {
             Some(low)
         } else {
             None
@@ -46,7 +46,7 @@ impl<T: Ord> BinarySearch<T> for [T] {
                 }
             }
         }
-        if self[low] > *x {
+        if self.len() > low && self[low] > *x {
             Some(low)
         } else {
             None
@@ -60,4 +60,6 @@ fn test_binary_search() {
 
     assert_eq!(vec.lower_bound(&4), Some(2));
     assert_eq!(vec.upper_bound(&4), Some(3));
+    assert_eq!(vec.lower_bound(&0), Some(0));
+    assert_eq!(vec.upper_bound(&60), None);
 }

@@ -63,23 +63,22 @@ fn main() {
         match d {
             'L' => {
                 if let Some(y) = h_block.get(&(r - 1)) {
-                    dbg!(d, c, &y);
-
-                    if let Some(t) = y.lower_bound(&(c)) {
-                        let mut index = t;
-                        if index == 0 {
-                            index += 1;
-                        }
-
-                        if let Some(z) = y.get(index - 1) {
-                            if z <= &c && z + l >= c {
-                                c = z + 1;
-                            } else {
-                                c -= l
-                            }
-                        }
+                    let mut index = 0;
+                    if let Some(t) = y.lower_bound(&(r)) {
+                        index = t.max(1);
                     } else {
-                        c = get_limit(d, l, c, w);
+                        index = y.len();
+                    }
+                    let z = &y[index - 1];
+
+                    if z >= &c {
+                        c = get_limit(d, l, c, r);
+                    } else {
+                        if z + l >= c {
+                            c = z + 1;
+                        } else {
+                            c -= l
+                        }
                     }
                 } else {
                     c = get_limit(d, l, c, r);
@@ -103,21 +102,23 @@ fn main() {
             }
             'U' => {
                 if let Some(y) = w_block.get(&(c - 1)) {
-                    if let Some(t) = y.lower_bound(&(c)) {
-                        let mut index = t;
-                        if index == 0 {
-                            index += 1;
-                        }
-
-                        if let Some(z) = y.get(index - 1) {
-                            if z <= &r && z + l >= r {
-                                r = z + 1;
-                            } else {
-                                r -= l
-                            }
-                        }
+                    let mut index = 0;
+                    if let Some(t) = y.lower_bound(&(r)) {
+                        index = t.max(1);
                     } else {
-                        r = get_limit(d, l, c, w);
+                        index = y.len();
+                    }
+
+                    let z = &y[index - 1];
+
+                    if z >= &r {
+                        r = get_limit(d, l, c, r);
+                    } else {
+                        if z + l >= r {
+                            r = z + 1;
+                        } else {
+                            r -= l
+                        }
                     }
                 } else {
                     r = get_limit(d, l, c, r);
@@ -125,8 +126,7 @@ fn main() {
             }
             'D' => {
                 if let Some(y) = w_block.get(&(c - 1)) {
-                    // dbg!(d, r, &y);
-                    if let Some(t) = y.upper_bound(&(r)) {
+                    if let Some(t) = y.lower_bound(&(r)) {
                         let z = &y[t];
 
                         if r + l >= *z {

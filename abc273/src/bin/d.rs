@@ -32,21 +32,9 @@ fn main() {
 
     let get_limit = |d: char, l: usize, c: usize, r: usize| {
         let limit = match d {
-            'U' => {
-                if r > l {
-                    r - l
-                } else {
-                    1
-                }
-            }
+            'U' => (r as isize - l as isize).max(1) as usize,
             'D' => h.min(r + l),
-            'L' => {
-                if c > l {
-                    c - l
-                } else {
-                    1
-                }
-            }
+            'L' => (c as isize - l as isize).max(1) as usize,
             'R' => w.min(c + l),
             _ => todo!(),
         };
@@ -77,7 +65,7 @@ fn main() {
                         if z + l >= c {
                             c = z + 1;
                         } else {
-                            c -= l
+                            c = get_limit(d, l, c, r);
                         }
                     }
                 } else {
@@ -91,7 +79,7 @@ fn main() {
                         if c + l >= *z {
                             c = z - 1;
                         } else {
-                            c += l;
+                            c = get_limit(d, l, c, r);
                         }
                     } else {
                         c = get_limit(d, l, c, r);
@@ -117,7 +105,7 @@ fn main() {
                         if z + l >= r {
                             r = z + 1;
                         } else {
-                            r -= l
+                            r = get_limit(d, l, c, r);
                         }
                     }
                 } else {
@@ -132,7 +120,7 @@ fn main() {
                         if r + l >= *z {
                             r = z - 1;
                         } else {
-                            r += l;
+                            r = get_limit(d, l, c, r);
                         }
                     } else {
                         r = get_limit(d, l, c, r);

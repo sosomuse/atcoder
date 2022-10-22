@@ -1,46 +1,41 @@
-use proconio::{input, marker::Chars};
+use proconio::input;
 
 fn main() {
     input! {
         _: u128,
-        x: u128,
-        s: Chars,
+        mut x: u128,
+        s: String,
     };
 
-    let mut y = log(x);
-    let mut z: u128 = x - 2_u128.pow(y as u32 - 1) + 1;
+    let w = s.replace("LU", "").replace("RU", "");
 
-    for i in 0..s.len() {
-        match s[i] {
+    let mut vec = vec![];
+
+    while x > 0 {
+        vec.push(x % 2);
+        x /= 2;
+    }
+    vec.reverse();
+
+    for c in w.chars().into_iter() {
+        match c {
             'U' => {
-                y -= 1;
-                z = (z + 1) / 2;
+                vec.pop();
             }
             'L' => {
-                y += 1;
-                z = z * 2 - 1;
+                vec.push(0);
             }
-            'R' => {
-                y += 1;
-                z = z * 2;
+            _ => {
+                vec.push(1);
             }
-            _ => unreachable!(),
         }
     }
 
-    let ans = 2_u128.pow(y as u32 - 1) + z - 1;
+    let mut ans = 0;
 
-    println!("{}", ans);
-}
-
-fn log(x: u128) -> u128 {
-    let mut x = x;
-    let mut count = 0;
-
-    while x > 0 {
-        x /= 2;
-        count += 1;
+    for c in vec {
+        ans = ans * 2 + c;
     }
 
-    count
+    println!("{}", ans);
 }

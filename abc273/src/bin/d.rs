@@ -45,7 +45,7 @@ fn main() {
             }
             'R' => {
                 let y = h_block.get(&(r - 1)).unwrap_or(&def);
-                let mut t = y.range(c..);
+                let mut t = y.range(c + 1..);
                 let next = t.next();
 
                 c += l;
@@ -69,7 +69,7 @@ fn main() {
             }
             'D' => {
                 let y = w_block.get(&(c - 1)).unwrap_or(&def);
-                let mut t = y.range(r..);
+                let mut t = y.range(r + 1..);
                 let next = t.next();
 
                 r += l;

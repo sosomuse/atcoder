@@ -8,32 +8,27 @@ fn main() {
         q: usize,
     };
 
-    let mut set: BTreeSet<(isize, usize)> = BTreeSet::new();
+    let mut set: BTreeSet<(usize, usize)> = BTreeSet::new();
 
     for i in 0..q {
         input! {
             t: usize,
-            x: isize,
+            x: usize,
         };
 
         if t == 1 {
             set.insert((x, i));
         } else if t == 2 {
             input! {
-                k: isize,
+                k: usize,
             }
 
-            let mut elem = set.range((0, 0)..=(x, t)).rev();
-            for j in 1..=k {
-                if j == k {
-                    if let Some(v) = elem.next() {
-                        println!("{}", v.0);
-                    } else {
-                        println!("-1");
-                    }
-                } else {
-                    elem.next();
-                }
+            let mut elem = set.range(..=(x, q));
+
+            if let Some(v) = elem.nth_back(k - 1) {
+                println!("{}", v.0);
+            } else {
+                println!("-1");
             }
         } else {
             input! {
@@ -41,17 +36,11 @@ fn main() {
             }
 
             let mut elem = set.range((x, 0)..);
-            // dbg!(&elem);
-            for j in 1..=k {
-                if j == k {
-                    if let Some(v) = elem.next() {
-                        println!("{}", v.0);
-                    } else {
-                        println!("-1");
-                    }
-                } else {
-                    elem.next();
-                }
+
+            if let Some(v) = elem.nth(k - 1) {
+                println!("{}", v.0);
+            } else {
+                println!("-1");
             }
         }
     }

@@ -10,7 +10,6 @@ fn main() {
     let mut memo = HashMap::new();
     memo.insert(0, 1);
     memo.insert(1, 2);
-    memo.insert(2, 3);
 
     println!("{}", f(n, &mut memo));
 }

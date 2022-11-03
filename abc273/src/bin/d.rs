@@ -1,5 +1,5 @@
 use std::cmp::*;
-use std::collections::{BTreeSet, HashMap};
+use std::collections::{BTreeMap, BTreeSet};
 
 use proconio::input;
 
@@ -14,12 +14,12 @@ fn main() {
         q: usize,
     };
 
-    let mut h_block = HashMap::new();
-    let mut w_block = HashMap::new();
+    let mut h_block = BTreeMap::new();
+    let mut w_block = BTreeMap::new();
 
     for (r, c) in &rc {
-        h_block.entry(*r - 1).or_insert(BTreeSet::new()).insert(*c);
-        w_block.entry(*c - 1).or_insert(BTreeSet::new()).insert(*r);
+        h_block.entry(*r).or_insert(BTreeSet::new()).insert(*c);
+        w_block.entry(*c).or_insert(BTreeSet::new()).insert(*r);
     }
 
     for _ in 0..q {
@@ -32,7 +32,7 @@ fn main() {
 
         match d {
             'L' => {
-                let y = h_block.get(&(r - 1)).unwrap_or(&def);
+                let y = h_block.get(&(r)).unwrap_or(&def);
                 let mut t = y.range(..c);
                 let next = t.next_back();
 
@@ -44,7 +44,7 @@ fn main() {
                 }
             }
             'R' => {
-                let y = h_block.get(&(r - 1)).unwrap_or(&def);
+                let y = h_block.get(&(r)).unwrap_or(&def);
                 let mut t = y.range(c + 1..);
                 let next = t.next();
 
@@ -52,11 +52,11 @@ fn main() {
                 if let Some(wall) = next {
                     c = min(c, *wall - 1);
                 } else {
-                    c = min(c, h);
+                    c = min(c, w);
                 }
             }
             'U' => {
-                let y = w_block.get(&(c - 1)).unwrap_or(&def);
+                let y = w_block.get(&(c)).unwrap_or(&def);
                 let mut t = y.range(..r);
                 let next = t.next_back();
 
@@ -68,7 +68,7 @@ fn main() {
                 }
             }
             'D' => {
-                let y = w_block.get(&(c - 1)).unwrap_or(&def);
+                let y = w_block.get(&(c)).unwrap_or(&def);
                 let mut t = y.range(r + 1..);
                 let next = t.next();
 
@@ -77,7 +77,7 @@ fn main() {
                 if let Some(wall) = next {
                     r = min(r, *wall - 1);
                 } else {
-                    r = min(r, w);
+                    r = min(r, h);
                 }
             }
             _ => unreachable!(),

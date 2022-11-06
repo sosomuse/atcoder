@@ -1,6 +1,6 @@
 fn main() {
     // 最大公約数
-    let a = gcd(4, 6);
+    let a = gcd(2, 100);
     println!("{}", a);
 
     // 最小公倍数

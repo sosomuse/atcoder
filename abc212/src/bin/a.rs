@@ -2,8 +2,15 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: usize,
+        a: usize,
+        b: usize,
     };
 
-    println!("{}", n);
+    if a > 0 && b == 0 {
+        println!("Gold");
+    } else if a == 0 && b > 0 {
+        println!("Silver");
+    } else {
+        println!("Alloy");
+    }
 }

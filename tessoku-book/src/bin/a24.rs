@@ -13,7 +13,7 @@ fn main() {
     for i in 1..n {
         let v = a[i];
         if v > c {
-            dp[i] = dp[i - 1] + 1;
+            dp[i] = dp[i - 1];
         } else {
             dp[i] = 1;
         }

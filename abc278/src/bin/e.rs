@@ -83,13 +83,6 @@ fn main() {
                 }
             }
 
-            // for k in ht..hb {
-            //     for l in wl..wr {
-            //         let v = hw[k][l];
-            //         *clone.entry(v).or_insert(0) -= 1;
-            //     }
-            // }
-
             let mut count = 0;
 
             for v in clone.values() {

@@ -5,6 +5,9 @@ fn main() {
     let ans = ncr(100, 3);
     println!("{}", ans);
 
+    let ans = ncr_m(100, 3, 10);
+    println!("{}", ans);
+
     let ans = convert_string(18, 2);
     println!("{}", ans);
 
@@ -75,4 +78,27 @@ fn power(a: usize, b: usize, m: usize) -> usize {
     }
 
     ans
+}
+
+fn division(a: usize, b: usize, m: usize) -> usize {
+    (a * power(b, m - 2, m)) % m
+}
+
+fn ncr_m(n: usize, r: usize, m: usize) -> usize {
+    let mut a = 1;
+    let mut b = 1;
+
+    for i in 1..=n {
+        a = a * i % m;
+    }
+
+    for i in 1..=r {
+        b = b * i % m;
+    }
+
+    for i in 1..=(n - r) {
+        b = b * i % m;
+    }
+
+    division(a, b, m)
 }

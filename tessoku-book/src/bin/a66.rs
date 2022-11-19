@@ -6,7 +6,6 @@ struct UnionFind {
 }
 
 // ユニオンファインド
-
 impl UnionFind {
     fn new(n: usize) -> Self {
         UnionFind {

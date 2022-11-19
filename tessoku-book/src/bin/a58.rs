@@ -2,15 +2,15 @@ use std::vec;
 
 use proconio::input;
 
-// セグメント木
-struct SegmentTree<T> {
+// セグメント木 - l, r最大値
+struct SegmentTree {
     size: usize,
-    tree: Vec<T>,
-    element: T,
+    tree: Vec<usize>,
+    element: usize,
 }
 
-impl<T: Ord + Copy + Eq + std::fmt::Debug> SegmentTree<T> {
-    fn new(n: usize, element: T) -> Self {
+impl SegmentTree {
+    fn new(n: usize, element: usize) -> Self {
         let mut size = 1;
         while size < n {
             size *= 2;
@@ -22,7 +22,7 @@ impl<T: Ord + Copy + Eq + std::fmt::Debug> SegmentTree<T> {
         }
     }
 
-    pub fn update(&mut self, index: usize, x: T) {
+    pub fn update(&mut self, index: usize, x: usize) {
         let mut i = self.size + index - 1;
         self.tree[i] = x;
         while i >= 2 {
@@ -31,11 +31,11 @@ impl<T: Ord + Copy + Eq + std::fmt::Debug> SegmentTree<T> {
         }
     }
 
-    fn get(&self, left: usize, right: usize) -> T {
+    fn get(&self, left: usize, right: usize) -> usize {
         return self._get(left, right, 1, self.size + 1, 1);
     }
 
-    fn _get(&self, left: usize, right: usize, a: usize, b: usize, u: usize) -> T {
+    fn _get(&self, left: usize, right: usize, a: usize, b: usize, u: usize) -> usize {
         if right <= a || b <= left {
             return self.element;
         }

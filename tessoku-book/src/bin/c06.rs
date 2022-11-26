@@ -1,3 +1,13 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+    };
+
+    println!("{}", n);
+
+    for i in 1..=n {
+        println!("{} {}", i, i % n + 1);
+    }
 }

@@ -1,3 +1,10 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+        m: usize,
+        k: usize,
+        ab: [(usize, usize); m],
+    };
 }

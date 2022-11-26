@@ -6,6 +6,7 @@ fn main() {
     println!("{:?}", a);
 }
 
+// 約数の列挙
 fn fnc(n: usize) -> Vec<usize> {
     let mut lst: Vec<usize> = vec![];
 

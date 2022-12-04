@@ -1,8 +1,5 @@
 fn main() {
-    let a = fnc(100);
-    println!("{:?}", a);
-
-    let a = fnc_2(4);
+    let a = fnc(280);
     println!("{:?}", a);
 }
 

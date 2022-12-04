@@ -1,3 +1,17 @@
+use proconio::{input, marker::Chars};
+
 fn main() {
-    unimplemented!();
+    input! {
+        s: Chars,
+        t: Chars,
+    };
+
+    for i in 0..s.len() {
+        if s[i] != t[i] {
+            println!("{}", i + 1);
+            return;
+        }
+    }
+
+    println!("{}", s.len() + 1);
 }

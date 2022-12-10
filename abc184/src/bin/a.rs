@@ -1,3 +1,10 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        (a, b): (isize, isize),
+        (c, d): (isize, isize),
+    };
+
+    println!("{}", a * d - b * c);
 }

@@ -1,3 +1,13 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+        k: usize,
+        mut p: [usize; n],
+    };
+
+    p.sort();
+
+    println!("{}", p.iter().take(k).sum::<usize>());
 }

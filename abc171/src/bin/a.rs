@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        a: char,
+    };
+
+    println!("{}", if a.is_ascii_uppercase() { "A" } else { "a" });
 }

@@ -5,68 +5,58 @@ fn main() {
         k: usize,
     }
 
-    let mut a = solve(k);
-    a.sort();
+    let mut ps: Vec<(usize, usize)> = vec![];
 
-    let mut ans = 10000000000000;
-
-    for i in 0..a.len() {
-        let v = a[i];
-
-        if v == k {
-            ans = std::cmp::min(ans, v);
-            continue;
-        }
-
-        let mut ok = false;
-        let mut tmp = k;
-
-        for j in (2..v).rev() {
-            if j >= tmp {
-                ok = true;
-                break;
+    {
+        let mut x = k;
+        let mut i = 2;
+        while i * i <= x {
+            if x % i != 0 {
+                i += 1;
+                continue;
+            };
+            let mut cnt = 0;
+            while x % i == 0 {
+                x /= i;
+                cnt += 1;
             }
-            tmp /= j;
+            ps.push((i, cnt));
+
+            i += 1;
         }
 
-        if !ok {
-            continue;
+        if x != 1 {
+            ps.push((x, 1))
+        };
+    }
+
+    let mut ac = k;
+    let mut wa = 0;
+
+    while ac - wa > 1 {
+        let wj = (ac + wa) / 2;
+        let mut ok = true;
+
+        for (p, cnt) in ps.iter() {
+            if f(wj, *p) < *cnt {
+                ok = false;
+            }
         }
 
-        let b = k / v;
-        let b2 = solve(b);
-        let a2 = b2.iter().filter(|&&x| x < v).collect::<Vec<_>>();
-
-        let mut seki = 1;
-
-        for v in a2 {
-            seki *= v;
-        }
-
-        if seki % b == 0 {
-            println!("{}", v);
-            return;
+        if ok {
+            ac = wj;
+        } else {
+            wa = wj;
         }
     }
 
-    println!("{}", ans);
+    println!("{}", ac);
 }
 
-fn solve(n: usize) -> Vec<usize> {
-    let mut lst: Vec<usize> = vec![];
-
-    let mut i = 1;
-
-    while i * i <= n {
-        if n % i == 0 {
-            lst.push(i);
-            if i != n / i {
-                lst.push(n / i);
-            }
-        }
-
-        i += 1;
-    }
-
-    lst
+fn f(mut n: usize, p: usize) -> usize {
+    if n == 0 {
+        return 0;
+    };
+    n /= p;
+    return n + f(n, p);
 }

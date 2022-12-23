@@ -7,11 +7,15 @@ fn main() {
         a: usize,
     };
 
-    let ans = k % a;
+    let mut ans = a;
 
-    if ans == 0 {
-        println!("{}", n)
-    } else {
-        println!("{}", ans)
+    for _ in 1..k {
+        if ans == n {
+            ans = 1;
+        } else {
+            ans += 1
+        }
     }
+
+    println!("{}", ans)
 }

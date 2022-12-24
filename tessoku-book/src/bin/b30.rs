@@ -5,4 +5,6 @@ fn main() {
         h: usize,
         w: usize,
     };
+
+    dbg!(h, w);
 }

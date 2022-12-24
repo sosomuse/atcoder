@@ -6,4 +6,6 @@ fn main() {
         q: usize,
         s: String,
     };
+
+    dbg!(n, q, s);
 }

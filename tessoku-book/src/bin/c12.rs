@@ -7,4 +7,6 @@ fn main() {
         k: usize,
         ab: [(usize, usize); m],
     };
+
+    dbg!(n, m, k, ab);
 }

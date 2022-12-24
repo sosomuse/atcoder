@@ -6,5 +6,7 @@ fn main() {
         pa: [(usize, usize); n],
     };
 
-    let mut dp = vec![vec![0; n + 1]; n + 1];
+    let dp = vec![vec![0; n + 1]; n + 1];
+
+    dbg!(dp, pa);
 }

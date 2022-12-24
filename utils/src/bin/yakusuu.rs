@@ -1,6 +1,9 @@
 fn main() {
     let a = fnc(280);
     println!("{:?}", a);
+
+    let b = fnc_2(280);
+    println!("{:?}", b);
 }
 
 // 約数の列挙

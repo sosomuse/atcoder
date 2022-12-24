@@ -7,7 +7,9 @@ fn main() {
     };
 
     let s: usize = t.iter().sum();
-    let mut dp = vec![vec![0; s + 1]; n + 1];
+    let dp = vec![vec![0; s + 1]; n + 1];
+
+    dbg!(dp);
 
     let ans = 0;
 

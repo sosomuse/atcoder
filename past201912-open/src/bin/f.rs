@@ -4,4 +4,6 @@ fn main() {
     input! {
         s: Chars,
     };
+
+    dbg!(s);
 }

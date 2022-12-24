@@ -6,36 +6,49 @@ fn main() {
         r: usize,
     };
 
-    let mut ans = 0;
-    let mut vec: Vec<usize> = vec![];
+    let ans = solve(l, r);
 
-    for i in l..=r {
-        vec.push(i);
+    println!("{}", ans.len());
+}
+
+fn solve(min: usize, max: usize) -> Vec<usize> {
+    let x = (max as f64).sqrt() as usize;
+    let mut ans_flags = vec![true; max - min + 1];
+    let mut flags = vec![true; x + 1];
+
+    if min == 1 {
+        ans_flags[0] = false;
     }
 
-    let mut i = 3;
-    while i * i <= l {
-        let len = vec.len();
-        for (i, v) in vec.iter_mut().enumerate() {
-            // let v = vec[0];
-            if *v == 1 {
-                ans += 1;
-                continue;
-            }
-            if *v == 2 {
-                vec.remove(i);
-                ans += 1;
-                continue;
-            }
-            if *v % i == 0 {
-                vec.remove(i);
-                continue;
-            }
+    for p in 2..=x {
+        if flags[p] == false {
+            continue;
         }
-        i += 2;
+
+        let mut v = (min / p).max(1);
+
+        if min % p != 0 {
+            v += 1;
+        }
+
+        for m in ((p * v)..=max).step_by(p) {
+            ans_flags[m - min] = false;
+        }
+
+        for m in (p..=x).step_by(p) {
+            flags[m] = false;
+        }
     }
 
-    dbg!(&vec);
+    let mut ans: Vec<usize> = vec![];
 
-    println!("{}", ans);
+    for (i, v) in ans_flags.iter().enumerate() {
+        if *v {
+            ans.push(i);
+        }
+    }
+
+    dbg!(&ans);
+
+    ans
 }

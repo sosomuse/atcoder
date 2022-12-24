@@ -33,12 +33,11 @@ fn main() {
     println!("Yes");
 }
 
+// ユニオンファインド
 struct UnionFind {
     par: Vec<usize>,
     siz: Vec<usize>,
 }
-
-// ユニオンファインド
 
 impl UnionFind {
     fn new(n: usize) -> Self {

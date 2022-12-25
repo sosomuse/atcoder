@@ -7,33 +7,33 @@ fn main() {
         s: Chars,
     };
 
-    let mut x = VecDeque::new();
-    let mut z = HashSet::new();
+    let mut queue = VecDeque::new();
+    let mut set = HashSet::new();
 
     for i in 0..s.len() {
         let v = s[i];
         if v == '(' {
-            x.push_back(HashSet::new());
+            queue.push_back(HashSet::new());
             continue;
         }
         if v == ')' {
-            let t = x.pop_back().unwrap();
+            let t = queue.pop_back().unwrap();
 
             for v2 in t {
-                z.remove(&v2);
+                set.remove(&v2);
             }
             continue;
         }
 
-        if let Some(t) = x.back_mut() {
+        if let Some(t) = queue.back_mut() {
             t.insert(v);
         }
 
-        if z.contains(&v) {
+        if set.contains(&v) {
             println!("No");
             return;
         }
-        z.insert(v);
+        set.insert(v);
     }
 
     println!("Yes");

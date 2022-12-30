@@ -20,27 +20,21 @@ fn main() {
         let next = a / g.sqrt() + v;
 
         if next > prev {
+            if next < ans {
+                ans = next;
+            }
+
             break;
         }
 
         prev = next;
+
+        if next < ans {
+            ans = next;
+        }
     }
 
     for _ in 0..1000000 {
-        if g == 1. {
-            break;
-        }
-
-        g += 1.;
-        v += b;
-        let time = a / g.sqrt() + v;
-
-        if time < ans {
-            ans = time;
-        }
-    }
-
-    for _ in 0..2000000 {
         if g == 1. {
             break;
         }

@@ -8,7 +8,7 @@ fn main() {
     let mut ans = String::from("");
 
     while n != 0 {
-        if n == 1 || n % 2 == 1 {
+        if n % 2 == 1 {
             ans.push('A');
             n -= 1;
         } else {

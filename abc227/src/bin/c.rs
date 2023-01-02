@@ -8,6 +8,7 @@ fn main() {
     let mut a = 1;
     let mut ans = 0;
 
+    // 3乗根までの整数を全探索
     while a * a * a <= n {
         let mut b = a;
         while a * b * b <= n {

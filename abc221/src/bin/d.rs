@@ -16,11 +16,13 @@ fn main() {
     x.sort();
 
     let mut ans = vec![0; n + 1];
+    let mut prev = -1;
     let mut cnt = 0;
 
-    for i in 0..x.len() - 1 {
+    for i in 0..x.len() {
+        ans[cnt as usize] += x[i].0 as isize - prev;
         cnt += x[i].1;
-        ans[cnt as usize] += x[i + 1].0 - x[i].0;
+        prev = x[i].0 as isize;
     }
 
     for i in 1..n + 1 {

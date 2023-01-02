@@ -5,35 +5,20 @@ fn main() {
         n: usize,
     };
 
+    let mut a = 1;
     let mut ans = 0;
-    ans += n;
-    let mut t = n / 2;
-    let mut wari = 2;
 
-    while t >= n / t {
-        ans += fnc(n).len() / 2;
-        wari += 1;
-        t = n / wari;
+    while a * a * a <= n {
+        let mut b = a;
+        while a * b * b <= n {
+            let max_c = n / (a * b);
+            ans += max_c - b + 1;
+
+            b += 1;
+        }
+
+        a += 1;
     }
 
     println!("{}", ans);
-}
-
-fn fnc(n: usize) -> Vec<usize> {
-    let mut lst: Vec<usize> = vec![];
-
-    let mut i = 1;
-
-    while i * i <= n {
-        if n % i == 0 {
-            lst.push(i);
-            if i != n / i {
-                lst.push(n / i);
-            }
-        }
-
-        i += 1;
-    }
-
-    lst
 }

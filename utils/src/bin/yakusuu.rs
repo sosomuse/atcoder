@@ -1,13 +1,13 @@
 fn main() {
-    let a = fnc(280);
+    let a = divisors(280);
     println!("{:?}", a);
 
-    let b = fnc_2(280);
+    let b = prime_factorize(280);
     println!("{:?}", b);
 }
 
 // 約数の列挙
-fn fnc(n: usize) -> Vec<usize> {
+fn divisors(n: usize) -> Vec<usize> {
     let mut lst: Vec<usize> = vec![];
 
     let mut i = 1;
@@ -26,16 +26,29 @@ fn fnc(n: usize) -> Vec<usize> {
     lst
 }
 
-// 約数の個数を求める
-fn fnc_2(n: usize) -> Vec<usize> {
-    let mut num_factors = vec![1; n + 1];
-    for i in 2..=n {
-        let mut j = i;
-        while j <= n {
-            num_factors[j] += 1;
-            j += i;
+// 素因数分解
+fn prime_factorize(mut n: usize) -> Vec<usize> {
+    let mut ans = vec![];
+
+    for p in 2..=n {
+        if p * p > n {
+            break;
         }
+
+        if n % p != 0 {
+            continue;
+        }
+
+        while n % p == 0 {
+            n /= p;
+        }
+
+        ans.push(p);
     }
 
-    num_factors
+    if n != 1 {
+        ans.push(n);
+    }
+
+    ans
 }

@@ -1,4 +1,4 @@
-use std::collections::{BTreeSet, HashMap};
+use std::{cmp::Reverse, collections::BinaryHeap};
 
 use proconio::input;
 
@@ -9,51 +9,21 @@ fn main() {
         a: [usize; n],
     };
 
-    let mut set = BTreeSet::new();
-    let mut count = HashMap::new();
-
-    let insert = |n: usize, set: &mut BTreeSet<usize>, count: &mut HashMap<usize, usize>| {
-        *count.entry(n).or_insert(0) += 1;
-        set.insert(n)
-    };
-
-    let remove =
-        |n: usize, set: &mut BTreeSet<usize>, count: &mut HashMap<usize, usize>| match count
-            .get_mut(&n)
-        {
-            Some(0) => {}
-            Some(c) => {
-                if *c == 1 {
-                    *c -= 1;
-                    set.remove(&n);
-                } else {
-                    *c -= 1;
-                }
-            }
-            None => {}
-        };
+    let mut heap = BinaryHeap::new();
 
     for v in a {
-        insert(v, &mut set, &mut count);
+        heap.push(v);
     }
 
     for _ in 0..m {
-        let mut last = 0;
-
-        if let Some(x) = set.range(..).next_back() {
-            last = *x;
-        }
-
-        remove(last, &mut set, &mut count);
-        insert(last / 2, &mut set, &mut count);
+        let v = heap.pop().unwrap();
+        heap.push(v / 2);
     }
 
     let mut sum = 0;
 
-    for v in set {
-        if let Some(x) = count.get(&v) {
-            sum += x * v
-        }
+    for v in heap {
+        sum += v;
     }
 
     println!("{}", sum);

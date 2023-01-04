@@ -5,26 +5,20 @@ fn main() {
         n: usize,
     };
 
+    let mut a = 1;
     let mut ans = 0;
-    ans += n;
-    let mut b = 2;
-    let mut c = n / 2;
 
-    while b <= c {
-        ans += c - b + 1;
-        b += 1;
-        c = n / b;
-    }
+    // 3乗根までの整数を全探索
+    while a * a * a <= n {
+        let mut b = a;
+        while a * b * b <= n {
+            let max_c = n / (a * b);
+            ans += max_c - b + 1;
 
-    let mut a = 2;
-    let mut b = 2;
-    let mut c = n / (a * b);
+            b += 1;
+        }
 
-    while (a * b) <= c {
-        ans += c - b + 1;
         a += 1;
-        b += 1;
-        c = n / (a * b);
     }
 
     println!("{}", ans);

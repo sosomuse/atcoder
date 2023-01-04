@@ -90,38 +90,3 @@ fn dijkstra(graph: &Vec<Vec<Edge>>, start: usize) -> Vec<usize> {
 
     dist
 }
-
-fn shortest_path(graph: &Vec<Vec<Edge>>, start: usize, end: usize) -> Option<usize> {
-    let mut dist: Vec<_> = (0..graph.len()).map(|_| std::usize::MAX).collect();
-    let mut heap = BinaryHeap::new();
-
-    dist[start] = 0;
-    heap.push(State {
-        cost: 0,
-        position: start,
-    });
-
-    while let Some(State { cost, position }) = heap.pop() {
-        if position == end {
-            return Some(cost);
-        }
-
-        if cost > dist[position] {
-            continue;
-        }
-
-        for edge in &graph[position] {
-            let next = State {
-                cost: cost + edge.cost,
-                position: edge.node,
-            };
-
-            if next.cost < dist[next.position] {
-                heap.push(next);
-                dist[next.position] = next.cost;
-            }
-        }
-    }
-
-    None
-}

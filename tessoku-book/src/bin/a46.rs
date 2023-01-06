@@ -1,4 +1,5 @@
 use proconio::input;
+use rand::Rng;
 
 fn main() {
     input! {
@@ -43,4 +44,9 @@ fn main() {
 
 fn manhattan_distance(x1: isize, y1: isize, x2: isize, y2: isize) -> f64 {
     ((x1 - x2).abs() as f64 + (y1 - y2).abs() as f64).sqrt()
+}
+
+fn random_int(min: i32, max: i32) -> i32 {
+    let mut rng = rand::thread_rng();
+    rng.gen_range(min, max)
 }

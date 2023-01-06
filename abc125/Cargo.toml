@@ -1,5 +1,5 @@
 [package]
-name = "tessoku-book"
+name = "abc125"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,7 +7,6 @@ edition = "2021"
 [dependencies]
 proconio = { version = "0.3.8", features = ["derive"] }
 itertools = "0.9.0"
-rand = "0.7.3"
 
 [profile.release]
 lto = true

@@ -1,3 +1,12 @@
+use std::isize;
+
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        b: isize,
+        c: isize,
+    };
+
+    dbg!(b, c);
 }

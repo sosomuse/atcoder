@@ -26,19 +26,15 @@ fn main() {
                     continue;
                 }
 
-                {
-                    let nj = j + 1;
-                    let nk = (r + v) % d;
-                    let c = now + v as isize;
-                    ch_max(&mut dp[ni][nj][nk], c)
-                }
+                let nj = j + 1;
+                let nk = (r + v) % d;
+                let c = now + v as isize;
+                ch_max(&mut dp[ni][nj][nk], c);
 
-                {
-                    let nj = j;
-                    let nk = r;
-                    let c = now;
-                    ch_max(&mut dp[ni][nj][nk], c)
-                }
+                let nj = j;
+                let nk = r;
+                let c = now;
+                ch_max(&mut dp[ni][nj][nk], c);
             }
         }
     }

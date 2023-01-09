@@ -1,6 +1,3 @@
-use std::collections::{HashMap, VecDeque};
-
-use itertools::Itertools;
 use proconio::input;
 
 fn main() {
@@ -10,51 +7,74 @@ fn main() {
         mut a: [usize; n],
     };
 
-    let sum = a.iter().sum::<usize>();
+    a.sort();
 
-    a.sort_by(|a, b| b.cmp(a));
-    let mut count = HashMap::new();
+    let mut uf = UnionFind::new(n);
 
     for i in 0..n {
-        *count.entry(a[i]).or_insert(0) += 1;
-    }
-
-    let unique: Vec<_> = a.into_iter().unique().collect();
-    let mut map = HashMap::new();
-    let mut dequeue = VecDeque::new();
-
-    for i in 0..unique.len() {
-        let v = unique[i];
-
-        if let Some(x) = count.get(&v) {
-            let mut y = v * x;
-
-            if let Some(z) = map.get(&((v + 1) % m)) {
-                y += z;
-            } else {
-                dequeue.push_back(v);
-            }
-
-            map.insert(v, y);
+        let j = (i + 1) % n;
+        if a[i] == a[j] || (a[i] + 1) % m == a[j] {
+            uf.unite(i, j);
         }
     }
 
-    while !dequeue.is_empty() {
-        let v = dequeue.pop_back().unwrap();
-        let mut z = 0;
+    let mut s = vec![0; n];
+    for i in 0..n {
+        s[uf.root(i)] += a[i];
+    }
 
-        if let Some(x) = map.get(&((v + 1) % m)) {
-            if *x < v {
-                z = *x;
-            }
-        }
+    let sum = a.iter().sum::<usize>();
+    let max = s.iter().max().unwrap();
 
-        if let Some(x) = map.get_mut(&v) {
-            *x += z;
+    println!("{}", sum - max);
+}
+
+#[derive(Debug)]
+struct UnionFind {
+    par: Vec<usize>,
+    siz: Vec<usize>,
+}
+
+#[allow(dead_code)]
+impl UnionFind {
+    fn new(n: usize) -> Self {
+        UnionFind {
+            par: (0..n).collect(),
+            siz: vec![1; n],
         }
     }
 
-    let max = map.values().max().unwrap();
+    fn root(&mut self, x: usize) -> usize {
+        if self.par[x] == x {
+            return x;
+        }
+        self.par[x] = self.root(self.par[x]);
+        self.par[x]
+    }
 
-    println!("{}", sum - *max);
+    fn issame(&mut self, x: usize, y: usize) -> bool {
+        self.root(x) == self.root(y)
+    }
+
+    fn unite(&mut self, mut parent: usize, mut child: usize) -> bool {
+        parent = self.root(parent);
+        child = self.root(child);
+
+        if parent == child {
+            return false;
+        }
+
+        if self.siz[parent] < self.siz[child] {
+            std::mem::swap(&mut parent, &mut child);
+        }
+
+        self.par[child] = parent;
+        self.siz[parent] += self.siz[child];
+        true
+    }
+
+    fn size(&mut self, x: usize) -> usize {
+        let root = self.root(x);
+        self.siz[root]
+    }
 }

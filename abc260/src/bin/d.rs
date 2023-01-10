@@ -16,7 +16,7 @@ fn main() {
     let mut map = HashMap::<usize, usize>::new();
     // 実際のカード群
     let mut cards: Vec<Vec<usize>> = vec![];
-    // 答え isizeとusizeの共用体
+    // 答え
     let mut ans: Vec<isize> = vec![-1; n + 1];
 
     for i in 0..n {

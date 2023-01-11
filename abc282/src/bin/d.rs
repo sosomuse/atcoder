@@ -1,4 +1,4 @@
-use std::collections::{BTreeSet, VecDeque};
+use std::collections::HashSet;
 
 use proconio::input;
 
@@ -10,82 +10,119 @@ fn main() {
     };
 
     let mut graph = vec![vec![]; n];
-    let mut new_uv = switch_order(&uv);
-    new_uv.sort();
+    let mut uf = UnionFind::new(n);
 
     for (u, v) in uv {
         graph[u - 1].push(v - 1);
         graph[v - 1].push(u - 1);
+        uf.unite(u - 1, v - 1);
     }
 
-    let new_uv = nonexistes_edges(&graph);
-    let mut ans = 0;
+    let mut edges = HashSet::new();
 
-    for (u, v) in new_uv {
-        let mut c = graph.clone();
-        let mut colors = vec![0; n];
-        c[u].push(v);
+    for i in 0..n {
+        edges.insert(uf.root(i));
+    }
 
-        if is_bipartite(0, &c, &mut colors, 1) {
-            ans += 1;
+    let mut colors = vec![0; n];
+
+    for v in edges {
+        let bipartite = is_bipartite(v, &graph, &mut colors, 1);
+        if !bipartite {
+            println!("0");
+            return;
         }
     }
 
-    println!("{}", ans);
+    let origin_black = colors.iter().filter(|&&c| c == 1).count();
+    let origin_white = colors.iter().filter(|&&c| c == -1).count();
+
+    let mut ans = 0;
+
+    for i in 0..graph.len() {
+        let is_black = colors[i] == 1;
+        let mut count = {
+            if is_black {
+                origin_white
+            } else {
+                origin_black
+            }
+        };
+
+        for &next in &graph[i] {
+            if uf.issame(i, next) {
+                count -= 1;
+            }
+        }
+
+        ans += count;
+    }
+
+    println!("{}", ans / 2);
 }
 
+// 2部グラフかどうかを判定する
 fn is_bipartite(v: usize, graph: &Vec<Vec<usize>>, colors: &mut Vec<isize>, color: isize) -> bool {
-    let mut queue = VecDeque::new();
-    queue.push_back((v, color));
+    colors[v] = color;
 
-    while let Some((v, color)) = queue.pop_front() {
-        colors[v] = color;
+    for &next in &graph[v] {
+        if colors[next] == color {
+            return false;
+        }
 
-        for &to in &graph[v] {
-            if colors[to] == color {
-                return false;
-            }
-
-            if colors[to] == 0 {
-                queue.push_back((to, -color));
-            }
+        if colors[next] == 0 && !is_bipartite(next, graph, colors, -color) {
+            return false;
         }
     }
 
     true
 }
 
-fn nonexistes_edges(graph: &Vec<Vec<usize>>) -> Vec<(usize, usize)> {
-    let mut new_uv = vec![];
-    let mut new_graph = vec![BTreeSet::new(); graph.len()];
-
-    for i in 0..graph.len() {
-        for &j in &graph[i] {
-            new_graph[i].insert(j);
-        }
-    }
-
-    for i in 0..graph.len() {
-        for j in i + 1..graph.len() {
-            if !new_graph[i].contains(&j) {
-                new_uv.push((i, j));
-            }
-        }
-    }
-
-    new_uv
+struct UnionFind {
+    par: Vec<usize>,
+    siz: Vec<usize>,
 }
 
-fn switch_order(uv: &Vec<(usize, usize)>) -> Vec<(usize, usize)> {
-    let mut new_uv = vec![];
-
-    for (u, v) in uv {
-        match u.cmp(v) {
-            std::cmp::Ordering::Less => new_uv.push((*u, *v)),
-            std::cmp::Ordering::Greater => new_uv.push((*v, *u)),
-            std::cmp::Ordering::Equal => (),
+impl UnionFind {
+    fn new(n: usize) -> Self {
+        UnionFind {
+            par: (0..n).collect(),
+            siz: vec![1; n],
         }
     }
 
-    new_uv
+    fn root(&mut self, x: usize) -> usize {
+        if self.par[x] == x {
+            return x;
+        }
+        self.par[x] = self.root(self.par[x]);
+        self.par[x]
+    }
+
+    fn issame(&mut self, x: usize, y: usize) -> bool {
+        self.root(x) == self.root(y)
+    }
+
+    fn unite(&mut self, mut parent: usize, mut child: usize) -> bool {
+        parent = self.root(parent);
+        child = self.root(child);
+
+        if parent == child {
+            return false;
+        }
+
+        if self.siz[parent] < self.siz[child] {
+            std::mem::swap(&mut parent, &mut child);
+        }
+
+        self.par[child] = parent;
+        self.siz[parent] += self.siz[child];
+        true
+    }
+
+    #[allow(dead_code)]
+    fn size(&mut self, x: usize) -> usize {
+        let root = self.root(x);
+        self.siz[root]
+    }
 }

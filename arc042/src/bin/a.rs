@@ -1,23 +1,23 @@
-use proconio::{input, marker::Usize1};
+use proconio::input;
 
 fn main() {
     input! {
         n: usize,
         m: usize,
-        a: [Usize1; m],
+        a: [usize; m],
     };
 
-    let mut s = vec![true; n];
-    for i in (0..m).rev() {
-        if s[a[i]] {
-            println!("{}", a[i] + 1);
+    let mut s = vec![true; n + 1];
+    for v in a.iter().rev() {
+        if s[*v] {
+            println!("{}", v);
         }
-        s[a[i]] = false;
+        s[*v] = false;
     }
 
-    for i in 0..n {
+    for i in 1..=n {
         if s[i] {
-            println!("{}", i + 1);
+            println!("{}", i);
         }
     }
 }

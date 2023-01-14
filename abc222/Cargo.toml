@@ -5,7 +5,6 @@ edition = "2021"
 
 # dependencies added to new project
 [dependencies]
-[dependencies]
 proconio = { version = "0.3.8", features = ["derive"] }
 
 [profile.release]

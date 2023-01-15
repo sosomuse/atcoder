@@ -25,6 +25,7 @@ fn main() {
         let a = *map.get(a).unwrap();
         let b = *map.get(b).unwrap();
 
+        // 閉路検出
         if uf.issame(a, b) {
             println!("No");
             return;

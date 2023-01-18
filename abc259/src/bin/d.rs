@@ -32,9 +32,7 @@ fn main() {
             let (x1, y1, r1) = xyr[i];
             let (x2, y2, r2) = xyr[j];
 
-            if is_circles_touching(
-                x1 as f64, y1 as f64, r1 as f64, x2 as f64, y2 as f64, r2 as f64,
-            ) {
+            if is_circles_touching(x1, y1, r1, x2, y2, r2) {
                 graph[i].push(j);
             }
         }
@@ -50,12 +48,19 @@ fn main() {
 }
 
 // 円が接しているかどうか
-fn is_circles_touching(x1: f64, y1: f64, r1: f64, x2: f64, y2: f64, r2: f64) -> bool {
-    let dx = x2 - x1;
-    let dy = y2 - y1;
+fn is_circles_touching(x1: isize, y1: isize, r1: isize, x2: isize, y2: isize, r2: isize) -> bool {
+    let dx = x1 - x2;
+    let dy = y1 - y2;
     let distance = dx * dx + dy * dy;
     let r = r1 + r2;
-    distance <= r * r && (distance.sqrt() + f64::min(r1, r2)).abs() >= f64::max(r1, r2)
+    if r * r < distance {
+        return false;
+    }
+    if distance < (r2 - r1) * (r2 - r1) {
+        return false;
+    }
+
+    true
 }
 
 fn dfs(v: usize, graph: &Vec<Vec<usize>>) -> Vec<usize> {

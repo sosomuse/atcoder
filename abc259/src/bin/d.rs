@@ -52,11 +52,10 @@ fn is_circles_touching(x1: isize, y1: isize, r1: isize, x2: isize, y2: isize, r2
     let dx = x1 - x2;
     let dy = y1 - y2;
     let distance = dx * dx + dy * dy;
-    let r = r1 + r2;
-    if r * r < distance {
+    if (r1 + r2) * (r1 + r2) < distance {
         return false;
     }
-    if distance < (r2 - r1) * (r2 - r1) {
+    if distance < (r1 - r2) * (r1 - r2) {
         return false;
     }
 

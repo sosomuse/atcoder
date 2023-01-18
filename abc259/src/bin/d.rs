@@ -49,11 +49,13 @@ fn main() {
     }
 }
 
+// 円が接しているかどうか
 fn is_circles_touching(x1: f64, y1: f64, r1: f64, x2: f64, y2: f64, r2: f64) -> bool {
-    let dx = x1 - x2;
-    let dy = y1 - y2;
-    let distance = (dx * dx + dy * dy).sqrt();
-    distance <= r1 + r2 && (distance + f64::min(r1, r2)).abs() >= f64::max(r1, r2)
+    let dx = x2 - x1;
+    let dy = y2 - y1;
+    let distance = dx * dx + dy * dy;
+    let r = r1 + r2;
+    distance <= r * r && (distance.sqrt() + f64::min(r1, r2)).abs() >= f64::max(r1, r2)
 }
 
 fn dfs(v: usize, graph: &Vec<Vec<usize>>) -> Vec<usize> {

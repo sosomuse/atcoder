@@ -3,7 +3,9 @@ use proconio::source::line::LineSource;
 use std::io;
 use std::io::{stdin, BufReader, Write};
 
+// インタラクティブ問題
 fn main() {
+    // 標準入力
     let stdin = stdin();
     let mut s = LineSource::new(BufReader::new(stdin.lock()));
     input! {

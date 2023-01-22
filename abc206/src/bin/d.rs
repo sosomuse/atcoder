@@ -10,18 +10,18 @@ fn main() {
     let max = *a.iter().max().unwrap();
     let mid = a.len() / 2;
     let las = a.len() - 1;
-    let mut uf = UnionFind::new(max);
+    let mut uf = UnionFind::new(max + 1);
 
     for i in 0..mid {
         let (x, y) = (a[i], a[las - i]);
         if x == y {
             continue;
         }
-        if uf.issame(x - 1, y - 1) {
+        if uf.issame(x, y) {
             continue;
         }
         ans += 1;
-        uf.unite(x - 1, y - 1);
+        uf.unite(x, y);
     }
 
     println!("{}", ans);

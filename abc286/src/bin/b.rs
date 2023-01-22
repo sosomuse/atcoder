@@ -1,3 +1,11 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        _: usize,
+        s: String,
+    };
+
+    let ans = s.replace("na", "nya");
+    println!("{}", ans);
 }

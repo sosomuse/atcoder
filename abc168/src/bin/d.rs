@@ -20,11 +20,14 @@ fn main() {
 
     let ans = bfs(0, &graph);
 
-    dbg!(ans);
+    println!("Yes");
+    for i in 1..n {
+        println!("{}", ans[i] + 1);
+    }
 }
 
 fn bfs(v: usize, graph: &Vec<Vec<usize>>) -> Vec<isize> {
-    let mut dist: Vec<isize> = vec![-1; graph.len()];
+    let mut dist = vec![-1; graph.len()];
     let mut queue: VecDeque<usize> = std::collections::VecDeque::new();
     queue.push_front(v);
     dist[v] = 0;
@@ -36,7 +39,7 @@ fn bfs(v: usize, graph: &Vec<Vec<usize>>) -> Vec<isize> {
         for i in 0..graph[pos].len() {
             let nex = graph[pos][i];
             if dist[nex] == -1 {
-                dist[nex] = dist[pos] + 1;
+                dist[nex] = pos as isize;
                 queue.push_back(nex);
             }
         }

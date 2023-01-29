@@ -14,13 +14,10 @@ fn main() {
         let v = &s[i];
         let pref = &v[3..];
 
-        for j in 0..m {
-            let ti = &t[j];
+        let is_match = t.iter().any(|t| t == pref);
 
-            if pref == ti {
-                matches[i] = true;
-                break;
-            }
+        if is_match {
+            matches[i] = true;
         }
     }
 

@@ -1,5 +1,3 @@
-use std::vec;
-
 use proconio::input;
 
 fn main() {

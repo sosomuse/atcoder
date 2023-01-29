@@ -1,3 +1,5 @@
+use std::vec;
+
 use proconio::input;
 
 fn main() {
@@ -8,27 +10,21 @@ fn main() {
         t: [String; m],
     };
 
-    let mut ans = 0;
+    let mut matches = vec![false; n];
 
     for i in 0..n {
         let v = &s[i];
-        let sub = &v[3..];
-
-        let mut ok = false;
+        let pref = &v[3..];
 
         for j in 0..m {
-            let v2 = &t[j];
+            let ti = &t[j];
 
-            if sub == v2 {
-                ok = true;
+            if pref == ti {
+                matches[i] = true;
                 break;
             }
         }
-
-        if ok {
-            ans += 1;
-        }
     }
 
-    println!("{}", ans);
+    println!("{}", matches.iter().filter(|&s| *s).count());
 }

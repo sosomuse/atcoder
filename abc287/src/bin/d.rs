@@ -8,13 +8,13 @@ fn main() {
 
     let mut count = 0;
 
-    let is_collect = |sv: char, tv: char| return sv == '?' || tv == '?' || sv == tv;
+    let is_collect = |sc: char, tc: char| return sc == '?' || tc == '?' || sc == tc;
 
     for i in 0..t.len() {
-        let sv = s[i + s.len() - t.len()];
-        let tv = t[i];
+        let sc = s[i + s.len() - t.len()];
+        let tc = t[i];
 
-        if is_collect(sv, tv) {
+        if is_collect(sc, tc) {
             count += 1;
         }
     }
@@ -26,17 +26,15 @@ fn main() {
     }
 
     for i in 0..t.len() {
-        let sv = s[i];
-        let tv = t[i];
+        let sc = s[i];
+        let tc = t[i];
+        let sc_back = s[i + s.len() - t.len()];
 
-        if is_collect(sv, tv) {
+        if is_collect(sc, tc) {
             count += 1;
         }
 
-        let sv2 = s[i + s.len() - t.len()];
-        let tv2 = t[i];
-
-        if is_collect(sv2, tv2) {
+        if is_collect(sc_back, tc) {
             count -= 1;
         }
 

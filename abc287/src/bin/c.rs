@@ -35,8 +35,7 @@ fn main() {
 fn dfs(v: usize, graph: &Vec<Vec<usize>>) -> Vec<usize> {
     let mut visited: Vec<bool> = vec![false; graph.len()];
     let mut ans: Vec<usize> = vec![];
-    let mut count = 0;
-    dfs_inner(v, graph, &mut visited, &mut ans, &mut count);
+    dfs_inner(v, graph, &mut visited, &mut ans, 1);
     ans
 }
 
@@ -45,15 +44,14 @@ fn dfs_inner(
     graph: &Vec<Vec<usize>>,
     visited: &mut Vec<bool>,
     ans: &mut Vec<usize>,
-    count: &mut usize,
+    count: usize,
 ) {
     visited[v] = true;
     ans.push(v);
-    *count += 1;
 
     let nexts = &graph[v];
 
-    if *count == 1 || *count == graph.len() {
+    if count == 1 || count == graph.len() {
         if nexts.len() != 1 {
             println!("No");
             std::process::exit(0);
@@ -67,7 +65,7 @@ fn dfs_inner(
 
     for &w in nexts.iter() {
         if !visited[w] {
-            dfs_inner(w, graph, visited, ans, count);
+            dfs_inner(w, graph, visited, ans, count + 1);
         }
     }
 }

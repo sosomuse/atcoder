@@ -14,8 +14,8 @@ fn main() {
         let prev_i = (current_i as isize - 1).max(0) as usize;
         let next_i = (current_i + 1).min(n - 1);
 
-        let mut count_prev = 0;
-        let mut count_next = 0;
+        let mut prev_count = 0;
+        let mut next_count = 0;
         let current = &c[current_i];
         let prev = &c[prev_i];
         let next = &c[next_i];
@@ -27,7 +27,7 @@ fn main() {
                 }
 
                 if current[i..i + 1] == prev[i..i + 1] {
-                    count_prev += 1;
+                    prev_count += 1;
                 } else {
                     break;
                 }
@@ -41,14 +41,14 @@ fn main() {
                 }
 
                 if current[i..i + 1] == next[i..i + 1] {
-                    count_next += 1;
+                    next_count += 1;
                 } else {
                     break;
                 }
             }
         }
 
-        let ans = count_prev.max(count_next);
+        let ans = prev_count.max(next_count);
 
         println!("{}", ans);
     }

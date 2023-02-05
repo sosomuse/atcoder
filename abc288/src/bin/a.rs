@@ -1,3 +1,12 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+        ab: [(isize, isize); n],
+    };
+
+    for (a, b) in ab {
+        println!("{}", a + b);
+    }
 }

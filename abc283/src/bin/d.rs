@@ -7,15 +7,19 @@ fn main() {
         s: Chars,
     };
 
-    let mut vec: Vec<HashSet<char>> = vec![HashSet::new(); 100];
+    let mut vec: Vec<HashSet<char>> = vec![HashSet::new(); 10];
     let mut count = 0;
 
     for c in s {
         match c {
             '(' => {
                 count += 1;
+
+                if count >= vec.len() {
+                    vec.push(HashSet::new());
+                }
+
                 vec[count] = vec[count - 1].clone();
-                vec.push(HashSet::new());
             }
             ')' => {
                 vec[count].clear();

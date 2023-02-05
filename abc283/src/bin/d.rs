@@ -1,4 +1,4 @@
-use std::collections::{HashSet, VecDeque};
+use std::collections::HashSet;
 
 use proconio::{input, marker::Chars};
 
@@ -7,33 +7,29 @@ fn main() {
         s: Chars,
     };
 
-    let mut queue = VecDeque::new();
-    let mut set = HashSet::new();
+    let mut vec: Vec<HashSet<char>> = vec![HashSet::new(); 100];
+    let mut count = 0;
 
-    for i in 0..s.len() {
-        let v = s[i];
-        if v == '(' {
-            queue.push_back(HashSet::new());
-            continue;
-        }
-        if v == ')' {
-            let t = queue.pop_back().unwrap();
-
-            for v2 in t {
-                set.remove(&v2);
+    for c in s {
+        match c {
+            '(' => {
+                count += 1;
+                vec[count] = vec[count - 1].clone();
+                vec.push(HashSet::new());
             }
-            continue;
-        }
+            ')' => {
+                vec[count].clear();
+                count -= 1
+            }
+            other => {
+                if vec[count].contains(&other) {
+                    println!("No");
+                    return;
+                }
 
-        if let Some(t) = queue.back_mut() {
-            t.insert(v);
+                vec[count].insert(other);
+            }
         }
-
-        if set.contains(&v) {
-            println!("No");
-            return;
-        }
-        set.insert(v);
     }
 
     println!("Yes");

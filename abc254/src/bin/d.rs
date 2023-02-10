@@ -5,34 +5,36 @@ fn main() {
         n: usize,
     }
 
-    let mut sqrt_set = std::collections::HashSet::<usize>::new();
+    let mut ans = 0;
 
-    let mut ans: usize = 0;
     for i in 1..=n {
-        let v = i.pow(2);
-        sqrt_set.insert(v);
+        let v = i * i;
         ans += 1;
     }
-
-    for s in sqrt_set {
-        let primes = fnc(s, n);
-        ans += primes;
-    }
-
-    println!("{}", ans);
 }
 
-fn fnc(n: usize, l: usize) -> usize {
-    let mut vec = Vec::new();
-    for i in 1..=(n as f64).sqrt() as usize {
-        if n % i != 0 {
+// 素因数分解（√n）
+fn prime_factorize(mut n: usize) -> Vec<usize> {
+    let mut ans = vec![];
+
+    for p in 2..=n {
+        if p * p > n {
+            break;
+        }
+
+        if n % p != 0 {
             continue;
         }
 
-        if i != n / i && n / i <= l {
-            vec.push(i);
-            vec.push(n / i);
+        while n % p == 0 {
+            n /= p;
+            ans.push(p);
         }
     }
-    return vec.len();
+
+    if n != 1 {
+        ans.push(n);
+    }
+
+    ans
 }

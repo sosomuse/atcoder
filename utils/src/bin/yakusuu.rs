@@ -26,7 +26,7 @@ fn divisors(n: usize) -> Vec<usize> {
     lst
 }
 
-// 素因数分解
+// 素因数分解（√n）
 fn prime_factorize(mut n: usize) -> Vec<usize> {
     let mut ans = vec![];
 

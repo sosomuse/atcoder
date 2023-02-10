@@ -1,21 +1,21 @@
 use std::collections::HashSet;
 
-use proconio::input;
+use proconio::{input, marker::Usize1};
 
 fn main() {
     input! {
         n: usize,
         m: usize,
-        uv: [(usize, usize); m],
+        uv: [(Usize1, Usize1); m],
     };
 
     let mut graph = vec![vec![]; n];
     let mut uf = UnionFind::new(n);
 
     for (u, v) in uv {
-        graph[u - 1].push(v - 1);
-        graph[v - 1].push(u - 1);
-        uf.unite(u - 1, v - 1);
+        graph[u].push(v);
+        graph[v].push(u);
+        uf.unite(u, v);
     }
 
     let mut edges = HashSet::new();
@@ -25,52 +25,51 @@ fn main() {
     }
 
     let mut colors = vec![0; n];
+    let mut ans = n * (n - 1) / 2 - m;
 
-    for v in edges {
-        let bipartite = is_bipartite(v, &graph, &mut colors, 1);
+    for i in 0..n {
+        if colors[i] != 0 {
+            continue;
+        }
+
+        let mut cvs = vec![0; 2];
+        let bipartite = is_bipartite(i, &graph, &mut colors, &mut cvs, 1);
+
         if !bipartite {
             println!("0");
             return;
         }
-    }
 
-    let origin_black = colors.iter().filter(|&&c| c == 1).count();
-    let origin_white = colors.iter().filter(|&&c| c == -1).count();
-
-    let mut ans = 0;
-
-    for i in 0..graph.len() {
-        let is_black = colors[i] == 1;
-        let mut count = {
-            if is_black {
-                origin_white
-            } else {
-                origin_black
-            }
-        };
-
-        for &next in &graph[i] {
-            if uf.issame(i, next) {
-                count -= 1;
-            }
+        for s in cvs {
+            ans -= (s * (s - 1) / 2) as usize
         }
-
-        ans += count;
     }
 
-    println!("{}", ans / 2);
+    println!("{}", ans);
 }
 
 // 2部グラフかどうかを判定する
-fn is_bipartite(v: usize, graph: &Vec<Vec<usize>>, colors: &mut Vec<isize>, color: isize) -> bool {
+fn is_bipartite(
+    v: usize,
+    graph: &Vec<Vec<usize>>,
+    colors: &mut Vec<isize>,
+    cvs: &mut Vec<isize>,
+    color: isize,
+) -> bool {
     colors[v] = color;
+
+    if color == 1 {
+        cvs[1] += 1;
+    } else {
+        cvs[0] += 1;
+    }
 
     for &next in &graph[v] {
         if colors[next] == color {
             return false;
         }
 
-        if colors[next] == 0 && !is_bipartite(next, graph, colors, -color) {
+        if colors[next] == 0 && !is_bipartite(next, graph, colors, cvs, -color) {
             return false;
         }
     }
@@ -83,6 +82,7 @@ struct UnionFind {
     siz: Vec<usize>,
 }
 
+#[allow(dead_code)]
 impl UnionFind {
     fn new(n: usize) -> Self {
         UnionFind {

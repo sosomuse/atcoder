@@ -5,7 +5,7 @@ fn main() {
         s: Chars,
     };
 
-    let mut dp = vec![0; 8];
+    let mut dp = vec![0usize; 8];
 
     for i in 0..s.len() {
         match s[i] {

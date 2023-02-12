@@ -1,11 +1,11 @@
-use proconio::input;
+use proconio::{input, marker::Chars};
 
 fn main() {
     input! {
-        s: String,
+        s: Chars,
     }
 
-    for c in s.chars() {
+    for c in s {
         if c == '0' {
             print!("1");
         } else {

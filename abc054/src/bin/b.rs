@@ -17,8 +17,10 @@ fn main() {
                     }
                 }
 
-                println!("Yes");
-                return;
+                if k == m - 1 {
+                    println!("Yes");
+                    return;
+                }
             }
         }
     }

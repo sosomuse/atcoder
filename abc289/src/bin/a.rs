@@ -2,8 +2,14 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: usize,
+        s: String,
     }
 
-    println!("{}", n)
+    for c in s.chars() {
+        if c == '0' {
+            print!("1");
+        } else {
+            print!("0");
+        }
+    }
 }

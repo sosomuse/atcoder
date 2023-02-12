@@ -5,12 +5,12 @@ use proconio::input;
 // セグメント木 - l, r合計値
 struct SegmentTree {
     size: usize,
-    tree: Vec<usize>,
-    element: usize,
+    tree: Vec<isize>,
+    element: isize,
 }
 
 impl SegmentTree {
-    fn new(n: usize, element: usize) -> Self {
+    fn new(n: usize, element: isize) -> Self {
         let mut size = 1;
         while size < n {
             size *= 2;
@@ -22,7 +22,7 @@ impl SegmentTree {
         }
     }
 
-    pub fn update(&mut self, index: usize, x: usize) {
+    pub fn update(&mut self, index: usize, x: isize) {
         let mut i = self.size + index - 1;
         self.tree[i] = x;
         while i >= 2 {
@@ -31,11 +31,11 @@ impl SegmentTree {
         }
     }
 
-    fn get(&self, left: usize, right: usize) -> usize {
+    fn get(&self, left: usize, right: usize) -> isize {
         return self._get(left, right, 1, self.size + 1, 1);
     }
 
-    fn _get(&self, left: usize, right: usize, a: usize, b: usize, u: usize) -> usize {
+    fn _get(&self, left: usize, right: usize, a: usize, b: usize, u: usize) -> isize {
         if right <= a || b <= left {
             return self.element;
         }

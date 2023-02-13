@@ -6,7 +6,7 @@ fn main() {
     println!("{:?}", b);
 }
 
-// 約数の列挙
+// 約数の列挙 (O(√n))
 fn divisors(n: usize) -> Vec<usize> {
     let mut lst: Vec<usize> = vec![];
 

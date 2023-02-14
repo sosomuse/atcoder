@@ -5,36 +5,33 @@ fn main() {
         n: usize,
     }
 
+    let mut f = vec![0; n + 1];
+    for i in 0..=n {
+        f[i] = i;
+    }
+    for i in 2..=n {
+        let x = i * i;
+        if x > n {
+            break;
+        }
+        let mut j = x;
+        while j <= n {
+            while f[j] % x == 0 {
+                f[j] /= x;
+            }
+            j += x;
+        }
+    }
+
+    let mut c = vec![0; n + 1];
+    for i in 1..=n {
+        c[f[i]] += 1;
+    }
     let mut ans = 0;
 
     for i in 1..=n {
-        let v = i * i;
-        ans += 1;
-    }
-}
-
-// 素因数分解（√n）
-fn prime_factorize(mut n: usize) -> Vec<usize> {
-    let mut ans = vec![];
-
-    for p in 2..=n {
-        if p * p > n {
-            break;
-        }
-
-        if n % p != 0 {
-            continue;
-        }
-
-        while n % p == 0 {
-            n /= p;
-            ans.push(p);
-        }
+        ans += c[i] * c[i];
     }
 
-    if n != 1 {
-        ans.push(n);
-    }
-
-    ans
+    println!("{}", ans);
 }

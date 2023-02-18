@@ -1,3 +1,13 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        d: usize,
+        c: [usize; 26],
+        s: [[usize; 26]; d],
+    };
+
+    for i in 0..d {
+        println!("1");
+    }
 }

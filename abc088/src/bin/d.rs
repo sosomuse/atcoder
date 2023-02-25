@@ -1,3 +1,5 @@
+use std::collections::VecDeque;
+
 use proconio::{input, marker::Chars};
 
 fn main() {
@@ -8,7 +10,13 @@ fn main() {
     };
 
     let graph = create_maze_graph(h, w, &s, '#');
-    let dist = bfs(h, w, &graph, (0, 0), (h - 1, w - 1));
+    let dist = bfs(0, &graph);
+    let goal = h * w - 1;
+
+    if dist[goal] == -1 {
+        println!("-1");
+        return;
+    }
 
     let mut white_count = 0;
     for i in 0..h {
@@ -19,39 +27,24 @@ fn main() {
         }
     }
 
-    let ans = if let Some(d) = dist[h - 1][w - 1] {
-        white_count - d - 1
-    } else {
-        -1
-    };
-
-    println!("{}", ans);
+    println!("{}", white_count - dist[goal] - 1);
 }
 
-fn bfs(
-    h: usize,
-    w: usize,
-    graph: &Vec<Vec<usize>>,
-    start: (usize, usize),
-    goal: (usize, usize),
-) -> Vec<Vec<Option<isize>>> {
-    let mut dist = vec![vec![None; w]; h];
-    let mut q = std::collections::VecDeque::new();
-    q.push_back(start);
-    dist[start.0][start.1] = Some(0);
+fn bfs(v: usize, graph: &Vec<Vec<usize>>) -> Vec<isize> {
+    let mut dist: Vec<isize> = vec![-1; graph.len()];
+    let mut queue: VecDeque<usize> = std::collections::VecDeque::new();
+    queue.push_front(v);
+    dist[v] = 0;
 
-    while let Some((i, j)) = q.pop_front() {
-        if (i, j) == goal {
-            return dist;
-        }
+    while !queue.is_empty() {
+        let pos = *queue.front().unwrap();
+        queue.pop_front().unwrap();
 
-        let p = w * i + j;
-        for &next in &graph[p] {
-            let next_i = next / w;
-            let next_j = next % w;
-            if dist[next_i][next_j].is_none() {
-                dist[next_i][next_j] = Some(dist[i][j].unwrap() + 1);
-                q.push_back((next_i, next_j));
+        for i in 0..graph[pos].len() {
+            let nex = graph[pos][i];
+            if dist[nex] == -1 {
+                dist[nex] = dist[pos] + 1;
+                queue.push_back(nex);
             }
         }
     }

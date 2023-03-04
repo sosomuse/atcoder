@@ -16,7 +16,7 @@ fn main() {
 
     for i in 0..n {
         let mut count = 0;
-        bfs(i, &mut graph, &mut count);
+        bfs(i, &graph, &mut count);
 
         ans += count;
     }
@@ -24,7 +24,7 @@ fn main() {
     println!("{}", ans);
 }
 
-fn bfs(v: usize, graph: &mut Vec<Vec<usize>>, count: &mut usize) -> Vec<isize> {
+fn bfs(v: usize, graph: &Vec<Vec<usize>>, count: &mut usize) -> Vec<isize> {
     let mut dist = vec![-1; graph.len()];
     let mut queue = std::collections::VecDeque::<usize>::new();
     queue.push_front(v);

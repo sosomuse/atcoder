@@ -3,53 +3,30 @@ use proconio::input;
 fn main() {
     input! {
         n: usize,
-        // a: [usize; n],
+        a: [usize; n],
     };
 
     let mut ans = 0;
 
     for i in 1..=n {
-        ans += ncr(n, i, 998244353);
+        let mut dp = vec![vec![vec![0usize; i]; i + 1]; n + 1];
+        dp[0][0][0] = 1;
+
+        for j in 0..n {
+            for k in 0..=i {
+                for l in 0..i {
+                    dp[j + 1][k][l] += dp[j][k][l];
+                    dp[j + 1][k][l] %= 998244353;
+                    if k != i {
+                        dp[j + 1][k + 1][(l + a[j]) % i] += dp[j][k][l];
+                        dp[j + 1][k + 1][(l + a[j]) % i] %= 998244353;
+                    }
+                }
+            }
+        }
+        ans += dp[n][i][0];
         ans %= 998244353;
     }
 
     println!("{}", ans);
-}
-
-fn power(a: usize, b: usize, m: usize) -> usize {
-    let mut p = a;
-    let mut ans = 1;
-
-    for i in 0..30 {
-        let w = 1 << i;
-        if (b & w) != 0 {
-            ans = ans * p % m;
-        }
-        p = p * p % m;
-    }
-
-    ans
-}
-
-fn division(a: usize, b: usize, m: usize) -> usize {
-    (a * power(b, m - 2, m)) % m
-}
-
-fn ncr(n: usize, r: usize, m: usize) -> usize {
-    let mut a = 1;
-    let mut b = 1;
-
-    for i in 1..=n {
-        a = a * i % m;
-    }
-
-    for i in 1..=r {
-        b = b * i % m;
-    }
-
-    for i in 1..=(n - r) {
-        b = b * i % m;
-    }
-
-    division(a, b, m)
 }

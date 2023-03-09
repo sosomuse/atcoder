@@ -2,30 +2,21 @@ use proconio::input;
 
 fn main() {
     input! {
-        mut n: isize,
+        n: usize,
         k: usize,
-        mut a: [usize; k],
+        a: [usize; k],
     };
 
-    a.sort_by(|a, b| b.cmp(a));
+    let mut dp = vec![0; n + 1];
 
-    let mut ans = 0;
-    let mut count = 0;
-
-    while n > 0 {
-        a.retain(|&v| v <= n as usize);
-
-        if a.len() == 0 {
-            break;
+    for i in 0..=n {
+        for j in 0..k {
+            if a[j] > i {
+                break;
+            }
+            dp[i] = std::cmp::max(dp[i], i - dp[i - a[j]]);
         }
-
-        if count % 2 == 0 {
-            ans += a[0];
-        }
-
-        n -= a[0] as isize;
-        count += 1;
     }
 
-    println!("{}", ans);
+    println!("{}", dp[n]);
 }

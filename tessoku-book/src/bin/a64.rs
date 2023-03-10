@@ -3,8 +3,34 @@ use std::{collections::BinaryHeap, vec};
 use proconio::input;
 use std::cmp::Ordering;
 
-// ダイクストラ法
+fn main() {
+    input! {
+        n: usize,
+        m: usize,
+        abc: [(usize, usize, usize); m],
+    };
 
+    let mut graph: Vec<Vec<Edge>> = vec![vec![]; n + 1];
+
+    for (a, b, c) in abc {
+        graph[a].push(Edge { node: b, cost: c });
+        graph[b].push(Edge { node: a, cost: c });
+    }
+
+    let ans = dijkstra(&graph, 1);
+
+    for i in 1..ans.len() {
+        let cost = ans[i];
+
+        if cost == std::usize::MAX {
+            println!("-1");
+        } else {
+            println!("{}", cost);
+        }
+    }
+}
+
+// ダイクストラ法
 #[derive(Copy, Clone, Eq, PartialEq)]
 
 struct State {
@@ -31,33 +57,6 @@ impl PartialOrd for State {
 struct Edge {
     node: usize,
     cost: usize,
-}
-
-fn main() {
-    input! {
-        n: usize,
-        m: usize,
-        abc: [(usize, usize, usize); m],
-    };
-
-    let mut graph: Vec<Vec<Edge>> = vec![vec![]; n + 1];
-
-    for (a, b, c) in abc {
-        graph[a].push(Edge { node: b, cost: c });
-        graph[b].push(Edge { node: a, cost: c });
-    }
-
-    let ans = dijkstra(&graph, 1);
-
-    for i in 1..ans.len() {
-        let cost = ans[i];
-
-        if cost == std::usize::MAX {
-            println!("-1");
-        } else {
-            println!("{}", cost);
-        }
-    }
 }
 
 fn dijkstra(graph: &Vec<Vec<Edge>>, start: usize) -> Vec<usize> {

@@ -22,12 +22,12 @@ impl SegmentTree {
         }
     }
 
-    pub fn update(&mut self, index: usize, x: usize) {
-        let mut i = self.size + index - 1;
-        self.tree[i] = x;
-        while i >= 2 {
-            i /= 2;
-            self.tree[i] = self.tree[i * 2] + self.tree[i * 2 + 1];
+    pub fn update(&mut self, pos: usize, x: usize) {
+        let mut pos = pos + self.size - 1;
+        self.tree[pos] = x;
+        while pos >= 2 {
+            pos /= 2;
+            self.tree[pos] = self.tree[pos * 2] + (self.tree[pos * 2 + 1]);
         }
     }
 

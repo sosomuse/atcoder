@@ -32,7 +32,6 @@ fn main() {
 
 // ダイクストラ法
 #[derive(Copy, Clone, Eq, PartialEq)]
-
 struct State {
     cost: usize,
     position: usize,

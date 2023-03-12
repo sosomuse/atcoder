@@ -15,12 +15,7 @@ fn main() {
         let x2 = x[1];
         let x3 = x[2];
 
-        if x1 == x2 && x2 == x3 {
-            println!("0");
-            continue;
-        }
-
-        if !is_even(x3, x2) || !is_even(x3, x1) || !is_even(x2, x1) {
+        if !is_even(x3, x2) || !is_even(x3, x1) {
             println!("-1");
             continue;
         }

@@ -7,13 +7,5 @@ fn main() {
         a: [usize; n],
     };
 
-    let mut ans = 0;
-
-    for v in a {
-        if v < p {
-            ans += 1;
-        }
-    }
-
-    println!("{}", ans);
+    println!("{}", a.iter().filter(|&&x| x < p).count());
 }

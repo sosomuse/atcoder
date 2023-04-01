@@ -1,68 +1,46 @@
 use proconio::input;
+use std::{cmp::Reverse, collections::BinaryHeap};
 
+// トポロジカルソート
 fn main() {
     input! {
         n: usize,
         m: usize,
         ab: [(usize, usize); m],
-    };
+    }
 
-    let mut uf = UnionFind::new(n + 1);
+    let mut graph = vec![vec![]; n + 1];
+    let mut in_deg = vec![0; n + 1];
+
     for (a, b) in ab {
-        if uf.is_same(a, b) {
-            println!("-1");
-            return;
-        }
-
-        uf.unite(a, b);
-    }
-}
-
-struct UnionFind {
-    par: Vec<usize>,
-    siz: Vec<usize>,
-}
-
-impl UnionFind {
-    fn new(n: usize) -> Self {
-        UnionFind {
-            par: (0..n).collect(),
-            siz: vec![1; n],
-        }
+        graph[a].push(b);
+        in_deg[b] += 1;
     }
 
-    fn root(&mut self, x: usize) -> usize {
-        if self.par[x] == x {
-            return x;
+    let mut b = BinaryHeap::new();
+
+    for i in 1..=n {
+        if in_deg[i] == 0 {
+            b.push(Reverse(i));
         }
-
-        self.par[x] = self.root(self.par[x]);
-        self.par[x]
     }
+    let mut r = vec![];
 
-    fn is_same(&mut self, x: usize, y: usize) -> bool {
-        self.root(x) == self.root(y)
-    }
-
-    fn unite(&mut self, x: usize, y: usize) {
-        let x = self.root(x);
-        let y = self.root(y);
-
-        if x == y {
-            return;
-        }
-
-        if self.siz[x] < self.siz[y] {
-            self.par[x] = y;
-            self.siz[y] += self.siz[x];
-        } else {
-            self.par[y] = x;
-            self.siz[x] += self.siz[y];
+    while let Some(i) = b.pop() {
+        r.push(i);
+        for &j in &graph[i.0] {
+            in_deg[j] -= 1;
+            if in_deg[j] == 0 {
+                b.push(Reverse(j));
+            }
         }
     }
 
-    fn size(&mut self, x: usize) -> usize {
-        let x = self.root(x);
-        self.siz[x]
+    if r.len() == n {
+        for i in r {
+            println!("{} ", i.0);
+        }
+    } else {
+        println!("-1");
     }
 }

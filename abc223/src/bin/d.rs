@@ -1,7 +1,8 @@
-use proconio::input;
+use proconio::{fastout, input};
 use std::{cmp::Reverse, collections::BinaryHeap};
 
 // トポロジカルソート
+#[fastout]
 fn main() {
     input! {
         n: usize,

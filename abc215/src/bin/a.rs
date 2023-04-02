@@ -1,3 +1,13 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        s: String,
+    };
+
+    if s == "Hello,World!" {
+        println!("AC");
+    } else {
+        println!("WA");
+    };
 }

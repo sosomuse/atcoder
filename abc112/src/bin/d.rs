@@ -7,7 +7,8 @@ fn main() {
     };
 
     let mut ans = 1;
-    let divs = divisors(m);
+    let mut divs = divisors(m);
+    divs.sort();
 
     for d in divs {
         if n <= m / d {

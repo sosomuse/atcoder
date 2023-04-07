@@ -1,3 +1,13 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        s: String,
+    };
+
+    if s.ends_with("er") {
+        println!("er");
+    } else {
+        println!("ist");
+    }
 }

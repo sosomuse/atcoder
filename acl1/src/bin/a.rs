@@ -1,4 +1,4 @@
-use std::collections::{BTreeSet, HashMap};
+use std::collections::BTreeMap;
 
 use proconio::input;
 
@@ -8,17 +8,34 @@ fn main() {
         xy: [(usize, usize); n],
     };
 
-    let mut sorted = xy.clone();
-    sorted.sort_by_key(|&(x, _)| x);
+    let mut xyi: Vec<(usize, usize, usize)> = xy
+        .iter()
+        .enumerate()
+        .map(|(i, &(x, y))| (x, y, i))
+        .collect();
 
-    let mut indexes = HashMap::new();
-    for (i, (x, y)) in xy.iter().enumerate() {
-        indexes.insert((*x, *y), i);
+    xyi.sort();
+    let mut uf = UnionFind::new(n);
+    let mut btree = BTreeMap::new();
+
+    for &(_, y, i) in xyi.iter() {
+        if btree.range(..y).count() == 0 {
+            btree.insert(y, i);
+            continue;
+        }
+
+        let mut stack = vec![];
+
+        for (y2, j) in btree.range(..y) {
+            stack.push(*y2);
+            uf.unite(i, *j);
+        }
+
+        while stack.len() > 1 {
+            btree.remove(&stack.pop().unwrap());
+        }
     }
-
-    let mut uf = UnionFind::new(n + 1);
-
-    for i in 1..=n {
+    for i in 0..n {
         println!("{}", uf.size(i));
     }
 }

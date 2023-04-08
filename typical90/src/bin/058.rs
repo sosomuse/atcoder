@@ -45,9 +45,7 @@ fn main() {
         return;
     }
 
-    if k >= count {
-        k -= count;
-    }
+    k -= count;
     k %= r;
 
     for _ in 0..k {

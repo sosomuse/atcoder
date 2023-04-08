@@ -1,9 +1,9 @@
 use proconio::input;
-use proconio::marker::Usize1;
+use proconio::marker::{Chars, Usize1};
 use std::cmp::min;
 use std::collections::VecDeque;
 
-const INF: i64 = 1_012_345_678;
+const INF: usize = 1_012_345_678;
 const DX: [i64; 4] = [1, 0, -1, 0];
 const DY: [i64; 4] = [0, 1, 0, -1];
 
@@ -24,10 +24,10 @@ fn main() {
         mut gy: Usize1,
     }
 
-    let mut s = vec![String::new(); h];
+    let mut s = vec![vec![]; h];
     for i in 0..h {
         input! {
-            c: String,
+            c: Chars,
         }
 
         s[i] = c;
@@ -45,13 +45,14 @@ fn main() {
         });
     }
 
+    // 0,1BFS
     while let Some(u) = deq.pop_front() {
         for i in 0..4 {
             let tx = (u.x as i64 + DX[i]) as usize;
             let ty = (u.y as i64 + DY[i]) as usize;
             let cost = dist[u.x][u.y][u.dir] + if u.dir != i { 1 } else { 0 };
 
-            if tx < h && ty < w && s[tx].chars().nth(ty).unwrap() == '.' && dist[tx][ty][i] > cost {
+            if tx < h && ty < w && dist[tx][ty][i] > cost && s[tx][ty] == '.' {
                 dist[tx][ty][i] = cost;
                 if u.dir != i {
                     deq.push_back(State {

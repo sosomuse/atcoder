@@ -2,9 +2,9 @@ use proconio::input;
 
 fn main() {
     input! {
-        a: usize,
-        b: usize,
+        a: u32,
+        b: u32,
     };
 
-    println!("{}", 32usize.pow((a - b) as u32))
+    println!("{}", 32usize.pow(a - b))
 }

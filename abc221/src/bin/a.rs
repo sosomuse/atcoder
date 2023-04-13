@@ -1,3 +1,10 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        a: usize,
+        b: usize,
+    };
+
+    println!("{}", 32usize.pow((a - b) as u32))
 }

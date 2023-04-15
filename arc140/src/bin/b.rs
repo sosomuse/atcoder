@@ -45,39 +45,22 @@ fn main() {
 
     counts.sort();
 
-    let mut ans = 0;
-    let mut r = 0;
-
-    for i in 0..counts.len() {
-        if counts[i] > 2 {
-            r = i;
-            break;
-        }
-    }
+    let mut count1 = 0;
+    let mut count2 = 0;
 
     for i in 0..counts.len() {
         let v = counts[i];
-
         if v == 1 {
-            ans += 1;
-
-            if r <= i {
-                continue;
-            }
-
-            if r >= counts.len() {
-                continue;
-            }
-
-            counts[r] -= 1;
-            ans += 1;
-            if counts[r] == 2 {
-                r += 1;
-            }
+            count1 += 1;
         } else {
-            ans += 2;
+            count2 += v - 2;
         }
     }
+
+    let mut ans = counts.len() * 2;
+    if count1 > count2 {
+        ans -= count1 - count2;
+    };
 
     println!("{}", ans);
 }

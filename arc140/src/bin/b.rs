@@ -43,8 +43,6 @@ fn main() {
         counts.push(a_count.min(c_count));
     }
 
-    counts.sort();
-
     let mut count1 = 0;
     let mut count2 = 0;
 

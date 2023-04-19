@@ -14,25 +14,24 @@ fn main() {
     for i in 1..n {
         let diff = a[i - 1] - a[i];
 
-        dbg!(i, diff, k, ans);
+        if diff == 0 {
+            continue;
+        }
 
         if diff * i >= k {
             let cnt = k / i;
             let rem = k % i;
-            let mut v = (a[i - 1] + a[i - 1] - cnt) / 2 * cnt;
-            if cnt % 2 == 0 {
-                v += 1;
+
+            if cnt != 0 {
+                let v = sum_range(a[i - 1], a[i - 1] - cnt + 1);
+                ans += v * i;
             }
 
-            ans += v * i;
-            ans += (a[i - 1] - cnt - 1) * rem;
+            ans += (a[i - 1] - cnt) * rem;
             k = 0;
             break;
         } else {
-            let mut v = (a[i - 1] + a[i - 1] - diff) / 2 * diff;
-            if diff % 2 == 0 {
-                v += 1;
-            };
+            let v = sum_range(a[i - 1], a[i] + 1);
             ans += v * i;
             k -= diff * i;
         }
@@ -41,9 +40,16 @@ fn main() {
     if k > 0 {
         let cnt = k / n;
         let rem = k % n;
-        ans += (a[n - 1] + a[n - 1] - cnt) / 2 * n;
-        ans += (a[n - 1] - cnt - 1) * rem;
+        ans += sum_range(a[n - 1], a[n - 1].saturating_sub(cnt) + 1) * n;
+        ans += (a[n - 1].saturating_sub(cnt)) * rem;
     }
 
     println!("{}", ans);
+}
+
+fn sum_range(a: usize, b: usize) -> usize {
+    let sum_a = a * (a + 1) / 2;
+    let sum_b = b * (b - 1) / 2;
+
+    sum_a - sum_b
 }

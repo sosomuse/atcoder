@@ -14,17 +14,17 @@ fn main() {
     let mut adj_list = vec![vec![]; 2 * n];
     for (u, v, a) in edges {
         if a == 1 {
-            adj_list[u].push((v, 1));
-            adj_list[v].push((u, 1));
+            adj_list[u].push(v);
+            adj_list[v].push(u);
         } else {
-            adj_list[u + n].push((v + n, 1));
-            adj_list[v + n].push((u + n, 1));
+            adj_list[u + n].push(v + n);
+            adj_list[v + n].push(u + n);
         }
     }
 
     for &s in &switches {
-        adj_list[s].push((s + n, 0));
-        adj_list[s + n].push((s, 0));
+        adj_list[s].push(s + n);
+        adj_list[s + n].push(s);
     }
 
     let mut dist = vec![std::usize::MAX; 2 * n];
@@ -33,9 +33,16 @@ fn main() {
     queue.push_back(0);
 
     while let Some(u) = queue.pop_front() {
-        for &(v, cost) in &adj_list[u] {
-            if dist[v] == std::usize::MAX {
-                dist[v] = dist[u] + cost;
+        for &v in &adj_list[u] {
+            if dist[v] != std::usize::MAX {
+                continue;
+            }
+
+            if (u < n && u + n == v) || (u >= n && u - n == v) {
+                dist[v] = dist[u];
+                queue.push_front(v);
+            } else {
+                dist[v] = dist[u] + 1;
                 queue.push_back(v);
             }
         }

@@ -2,6 +2,7 @@ use proconio::input;
 use proconio::marker::Usize1;
 use std::collections::VecDeque;
 
+// 01-BFS
 fn main() {
     input! {
         n: usize,

@@ -12,8 +12,14 @@ fn main() {
     }
 
     let x_count = s.iter().filter(|&c| *c == 'x').count();
-    let count = k / x_count;
-    let res = k % x_count;
+    let mut count = k / x_count;
+    let mut res = k % x_count;
+
+    if count != 0 {
+        count -= 1;
+        res += x_count;
+    }
+
     let ans = n * count;
 
     let mut t = vec![];

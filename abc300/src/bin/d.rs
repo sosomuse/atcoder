@@ -9,21 +9,27 @@ fn main() {
     while 2 * 2 * 3 * max * max <= n {
         max += 1;
     }
-    let mut primes: Vec<usize> = solve(max);
-
-    primes.sort();
+    let primes: Vec<usize> = solve(max);
     let len = primes.len();
     let mut ans = 0;
 
-    for i in 0..len {
+    for i in 0..len - 2 {
         let x = primes[i];
-        if x * x * x * x * x > n {
+        let y = primes[i + 1];
+        let z = primes[i + 2];
+        if x * x * y * z * z > n {
             break;
         }
 
         let mut r = len - 1;
 
-        for j in i + 1..len {
+        for j in i + 1..len - 1 {
+            let y = primes[j];
+            let z = primes[j + 1];
+            if x * x * y * z * z > n {
+                break;
+            }
+
             if r < j {
                 break;
             }

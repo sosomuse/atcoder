@@ -26,17 +26,22 @@ fn main() {
     let mut ans = vec![1; n + 1];
     for i in 0..k {
         let (p, d) = pd[i];
+        for j in 1..=n {
+            if dists[p][j] >= 0 && dists[p][j] < d as isize {
+                ans[j] = 0;
+            }
+        }
+    }
+
+    for i in 0..k {
+        let (p, d) = pd[i];
         let mut is_ok = false;
 
         for j in 1..=n {
             if dists[p][j] == d as isize {
-                if ans[j] != 0 {
+                if ans[j] == 1 {
                     is_ok = true;
                 }
-            }
-
-            if dists[p][j] >= 0 && dists[p][j] < d as isize {
-                ans[j] = 0;
             }
         }
 

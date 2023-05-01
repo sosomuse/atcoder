@@ -40,7 +40,7 @@ fn main() {
     for i in 0..x.len() {
         let a = x[i];
         let count = x.lower_bound(&(a + res + 1));
-        max_count = std::cmp::max(max_count, count - i - 1);
+        max_count = std::cmp::max(max_count, count - 1 - x[i]);
     }
 
     println!("{}", ans + max_count);

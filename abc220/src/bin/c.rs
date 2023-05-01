@@ -7,7 +7,7 @@ fn main() {
         x: usize,
     };
 
-    let mut sum = a.iter().sum::<usize>();
+    let sum = a.iter().sum::<usize>();
     let mut ans = x / sum * n;
     let mut res = x % sum;
 

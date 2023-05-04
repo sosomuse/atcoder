@@ -21,7 +21,7 @@ fn main() {
     for i in 0..len {
         let x = divs[i];
         if x * x > k {
-            continue;
+            break;
         }
         if x * x * x > k {
             break;

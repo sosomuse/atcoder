@@ -6,13 +6,9 @@ fn main() {
         a: [usize; n],
     };
 
-    let mut s = a
-        .iter()
-        .enumerate()
-        .map(|(i, &x)| (i + 1, x))
-        .collect::<Vec<_>>();
+    let mut a_with_index = a.into_iter().enumerate().collect::<Vec<_>>();
 
-    s.sort_by_key(|&(_, x)| x);
+    a_with_index.sort_by_key(|&(_, x)| x);
 
-    println!("{}", s[n - 2].0)
+    println!("{}", a_with_index[n - 2].0 + 1);
 }

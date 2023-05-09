@@ -1,5 +1,3 @@
-use std::collections::VecDeque;
-
 use proconio::{input, marker::Chars};
 
 fn main() {
@@ -10,41 +8,48 @@ fn main() {
     };
 
     let graph = create_maze_graph(h, w, &c, '#');
+    let mut ans = -1;
 
     for i in 0..h {
         for j in 0..w {
             let p = w * i + j;
-            let ans = bfs(p, &graph);
-            println!("{:?}", ans);
+            let tmp = dfs(p, &graph);
+            ans = std::cmp::max(ans, tmp);
         }
     }
+
+    println!("{}", ans);
 }
 
-fn bfs(start: usize, graph: &Vec<Vec<usize>>) -> Vec<isize> {
-    let mut dist: Vec<isize> = vec![-1; graph.len()];
-    let mut queue: VecDeque<usize> = std::collections::VecDeque::new();
-    let mut max = 0;
-    queue.push_front(start);
+fn dfs(start: usize, graph: &Vec<Vec<usize>>) -> isize {
+    let mut visited: Vec<bool> = vec![false; graph.len()];
+    let mut max = -1;
+    _dfs(start, graph, &mut visited, 0, start, &mut max);
+    max
+}
 
-    while !queue.is_empty() {
-        let pos = *queue.front().unwrap();
-        queue.pop_front().unwrap();
-
-        for i in 0..graph[pos].len() {
-            let nex = graph[pos][i];
-            if nex == start {
-                max = std::cmp::max(max, dist[pos] + 1);
-                continue;
+fn _dfs(
+    v: usize,
+    graph: &Vec<Vec<usize>>,
+    visited: &mut Vec<bool>,
+    count: usize,
+    goal: usize,
+    max: &mut isize,
+) {
+    for &w in graph[v].iter() {
+        if w == goal {
+            if count >= 3 {
+                *max = std::cmp::max(*max, count as isize + 1);
             }
+            continue;
+        }
 
-            if dist[nex] == -1 {
-                dist[nex] = dist[pos] + 1;
-                queue.push_back(nex);
-            }
+        if !visited[w] {
+            visited[w] = true;
+            _dfs(w, graph, visited, count + 1, goal, max);
+            visited[w] = false;
         }
     }
-
-    dist
 }
 
 fn create_maze_graph(h: usize, w: usize, s: &Vec<Vec<char>>, wall: char) -> Vec<Vec<usize>> {

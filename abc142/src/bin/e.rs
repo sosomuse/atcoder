@@ -8,9 +8,9 @@ fn main() {
         m: usize,
     };
 
-    let mut a = vec![];
-    let mut b = vec![];
-    let mut c = vec![vec![]; m];
+    let mut a = vec![0; m];
+    let mut b = vec![0; m];
+    let mut dp = vec![usize::MAX; 1 << n];
 
     for i in 0..m {
         input! {

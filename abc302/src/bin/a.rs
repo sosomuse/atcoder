@@ -2,8 +2,16 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: usize,
+        a: usize,
+        b: usize,
     };
 
-    println!("{}", n);
+    let mut x = a / b;
+    let res = a % b;
+
+    if res > 0 {
+        x += 1;
+    }
+
+    println!("{}", x);
 }

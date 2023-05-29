@@ -31,6 +31,8 @@ fn main() {
         }
     }
 
+    ng_count = 0;
+
     for i in b..d {
         let v = s[i];
         if v == '#' {
@@ -53,7 +55,7 @@ fn main() {
             ok_count += 1;
         }
 
-        if ok_count == 3 {
+        if ok_count >= 3 {
             if i <= d && i > b {
                 is_change = true;
             }

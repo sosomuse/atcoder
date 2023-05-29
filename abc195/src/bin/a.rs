@@ -1,3 +1,14 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        m: usize,
+        h: usize,
+    };
+
+    if h % m == 0 {
+        println!("Yes");
+    } else {
+        println!("No");
+    }
 }

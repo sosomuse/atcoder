@@ -3,7 +3,6 @@ use proconio::input;
 #[derive(Debug, Clone, Copy)]
 struct Burger {
     p: usize,
-    b: usize,
     sum: usize,
 }
 
@@ -12,13 +11,14 @@ fn main() {
         n: usize,
         mut x: usize,
     };
+    x -= 1;
 
-    let mut burgers = vec![Burger { p: 1, b: 0, sum: 1 }];
+    let mut burgers = vec![Burger { p: 1, sum: 1 }];
 
     for i in 1..=n {
         let p = burgers[i - 1].p * 2 + 1;
-        let b = burgers[i - 1].b * 2 + 2;
-        burgers.push(Burger { p, b, sum: p + b });
+        let sum = burgers[i - 1].sum * 2 + 3;
+        burgers.push(Burger { p, sum });
     }
 
     println!("{}", f(n, &mut x, &burgers));
@@ -29,7 +29,7 @@ fn f(level: usize, x: &mut usize, burgers: &Vec<Burger>) -> usize {
         return 1;
     };
 
-    if *x <= 1 {
+    if *x < 1 {
         return 0;
     };
     *x -= 1;

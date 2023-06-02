@@ -16,7 +16,6 @@ fn main() {
     let mut dp = vec![vec![0; 4]; k + 1];
     if x1 == x2 && y1 == y2 {
         dp[0][0] = 1;
-        dp[0][3] = 1;
     } else if x1 == x2 {
         dp[0][1] = 1;
     } else if y1 == y2 {

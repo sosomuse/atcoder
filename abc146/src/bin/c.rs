@@ -9,28 +9,19 @@ fn main() {
         x: usize,
     };
 
-    let mut ans = 0;
-    let mut n = 1;
+    let mut left = 1;
+    let mut right = MAX + 1;
 
-    while n < MAX {
-        if is_buyable(a, b, n, x) {
-            ans = n;
+    while left < right {
+        let mid = (left + right) / 2;
+        if is_buyable(a, b, mid, x) {
+            left = mid + 1;
         } else {
-            break;
-        }
-
-        n += 100000;
-        n = n.min(MAX);
-    }
-
-    for i in ((n.saturating_sub(100000))..=n).rev() {
-        if is_buyable(a, b, i, x) {
-            ans = i;
-            break;
+            right = mid;
         }
     }
 
-    println!("{}", ans);
+    println!("{}", left - 1);
 }
 
 fn is_buyable(a: usize, b: usize, n: usize, x: usize) -> bool {

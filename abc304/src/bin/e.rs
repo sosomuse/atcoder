@@ -18,7 +18,6 @@ fn main() {
         uf.unite(u, v);
     }
 
-    let bad = bad.into_iter().collect::<HashSet<_>>();
     let mut roots = HashSet::new();
 
     for (x, y) in bad {
@@ -26,8 +25,8 @@ fn main() {
     }
 
     for (u, v) in &queries {
-        uf.snapshot();
-        uf.unite(*u, *v);
+        // uf.snapshot();
+        // uf.unite(*u, *v);
         if roots.contains(&(uf.find(*u), uf.find(*v)))
             || roots.contains(&(uf.find(*v), uf.find(*u)))
         {
@@ -35,7 +34,7 @@ fn main() {
         } else {
             println!("Yes");
         }
-        uf.undo();
+        // uf.undo();
     }
 }
 

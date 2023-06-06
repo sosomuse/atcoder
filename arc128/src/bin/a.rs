@@ -1,3 +1,24 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+        a: [usize; n],
+    };
+
+    let mut ans = vec![0; n];
+    for i in 0..n - 1 {
+        if a[i] > a[i + 1] {
+            ans[i] ^= 1;
+            ans[i + 1] ^= 1;
+        }
+    }
+
+    println!(
+        "{}",
+        ans.iter()
+            .map(|x| x.to_string())
+            .collect::<Vec<_>>()
+            .join(" ")
+    );
 }

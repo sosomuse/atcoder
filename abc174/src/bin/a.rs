@@ -1,3 +1,13 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        x: isize,
+    };
+
+    if x >= 30 {
+        println!("Yes");
+    } else {
+        println!("No");
+    }
 }

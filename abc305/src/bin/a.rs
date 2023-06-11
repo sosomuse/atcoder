@@ -3,7 +3,9 @@ use proconio::input;
 fn main() {
     input! {
         n: usize,
-    };
+    }
 
-    println!("{}", n);
+    let res = (n as f64 / 5.0).round() as usize * 5;
+
+    println!("{}", res);
 }

@@ -30,7 +30,7 @@ fn main() {
         if used[x] {
             let (max, i) = *unused_values.iter().next_back().unwrap_or(&(0, 0));
             // 前の値より大きい場合もしくは最大値より大きい場合
-            if prev < y || max < y {
+            if prev <= y || max <= y {
                 used_values.remove(&(prev, x));
                 used_values.insert((y, x));
                 ans += y;

@@ -10,16 +10,16 @@ fn main() {
 
     let mut a = vec![0; n];
     let mut ans = 0;
-    let mut no_set = BTreeSet::<(usize, usize)>::new();
-    let mut set = BTreeSet::<(usize, usize)>::new();
-    let mut set_index = vec![false; n];
+    let mut unused_values = BTreeSet::<(usize, usize)>::new();
+    let mut used_values = BTreeSet::<(usize, usize)>::new();
+    let mut used = vec![false; n];
 
     for i in 0..n {
         if i < k {
-            set.insert((0, i));
-            set_index[i] = true;
+            used_values.insert((0, i));
+            used[i] = true;
         } else {
-            no_set.insert((0, i));
+            unused_values.insert((0, i));
         }
     }
 
@@ -27,42 +27,42 @@ fn main() {
         let prev = a[x];
 
         // 使われている場合
-        if set_index[x] {
-            let (max, i) = *no_set.iter().next_back().unwrap_or(&(0, 0));
+        if used[x] {
+            let (max, i) = *unused_values.iter().next_back().unwrap_or(&(0, 0));
             // 前の値より大きい場合もしくは最大値より大きい場合
             if prev < y || max < y {
-                set.remove(&(prev, x));
-                set.insert((y, x));
+                used_values.remove(&(prev, x));
+                used_values.insert((y, x));
                 ans += y;
                 ans -= prev;
             } else {
-                set.remove(&(prev, x));
-                no_set.insert((y, x));
+                used_values.remove(&(prev, x));
+                unused_values.insert((y, x));
 
-                no_set.remove(&(max, i));
-                set.insert((max, i));
+                unused_values.remove(&(max, i));
+                used_values.insert((max, i));
 
-                set_index[x] = false;
-                set_index[i] = true;
+                used[x] = false;
+                used[i] = true;
 
                 ans += max;
                 ans -= prev;
             }
         } else {
-            let (min, i) = *set.iter().next().unwrap();
+            let (min, i) = *used_values.iter().next().unwrap();
 
             if min > y {
-                no_set.remove(&(prev, x));
-                no_set.insert((y, x));
+                unused_values.remove(&(prev, x));
+                unused_values.insert((y, x));
             } else {
-                set.remove(&(min, i));
-                no_set.insert((min, i));
+                used_values.remove(&(min, i));
+                unused_values.insert((min, i));
 
-                no_set.remove(&(prev, x));
-                set.insert((y, x));
+                unused_values.remove(&(prev, x));
+                used_values.insert((y, x));
 
-                set_index[i] = false;
-                set_index[x] = true;
+                used[i] = false;
+                used[x] = true;
 
                 ans += y;
                 ans -= min;

@@ -1,47 +1,59 @@
 use proconio::input;
+use std::collections::VecDeque;
 
 fn main() {
     input! {
         n: usize,
-        mut a: [usize; n],
+        mut a: [isize; n],
     };
 
     a.sort();
-    let mut deque = std::collections::VecDeque::new();
-
-    deque.push_back(a[0]);
-    deque.push_back(a[n - 1]);
-
-    let mut front_count = 1;
-    let mut back_count = 1;
-
-    while deque.len() < n {
-        let left = deque[0];
-        let right = deque[deque.len() - 1];
-        let current = {
-            if front_count <= back_count {
-                front_count += 1;
-                a[front_count - 1]
-            } else {
-                back_count += 1;
-                a[n - 1 - (back_count - 1)]
-            }
-        };
-
-        let l_abs = (left as i64 - current as i64).abs();
-        let r_abs = (right as i64 - current as i64).abs();
-
-        if l_abs > r_abs {
-            deque.push_front(current);
-        } else {
-            deque.push_back(current);
-        }
-    }
-
+    let mut front = true;
     let mut ans = 0;
 
-    for i in 0..n - 1 {
-        ans += (deque[i] as i64 - deque[i + 1] as i64).abs();
+    for _ in 0..2 {
+        let mut da = VecDeque::from(a.clone());
+        let mut dr = VecDeque::new();
+
+        let xi;
+        if front {
+            xi = da.pop_front().unwrap();
+        } else {
+            xi = da.pop_back().unwrap();
+        }
+
+        dr.push_back(xi);
+        front = !front;
+
+        while da.len() > 1 {
+            if front {
+                let l = da.pop_front().unwrap();
+                let u = da.pop_front().unwrap();
+                dr.push_front(l);
+                dr.push_back(u);
+            } else {
+                let u = da.pop_back().unwrap();
+                let l = da.pop_back().unwrap();
+                dr.push_front(u);
+                dr.push_back(l);
+            }
+            front = !front;
+        }
+
+        if da.len() > 0 {
+            let x = da.pop_front().unwrap();
+            dr.push_front(x);
+        }
+
+        let mut tmp = 0;
+        let mut p = dr.pop_front().unwrap();
+        for _ in 1..n {
+            let c = dr.pop_front().unwrap();
+            tmp += (c - p).abs();
+            p = c;
+        }
+        ans = ans.max(tmp);
+        front = false;
     }
 
     println!("{}", ans);

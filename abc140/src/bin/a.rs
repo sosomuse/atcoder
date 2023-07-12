@@ -2,7 +2,7 @@ use proconio::input;
 
 fn main() {
     input! {
-        n: u8,
+        n: usize,
     };
 
     println!("{}", n.pow(3));

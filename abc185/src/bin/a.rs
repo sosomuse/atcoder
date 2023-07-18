@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        a: [usize; 4],
+    };
+
+    println!("{}", a.iter().min().unwrap());
 }

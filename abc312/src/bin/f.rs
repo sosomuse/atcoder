@@ -41,10 +41,6 @@ fn main() {
 
     let mut ans = 0;
 
-    dbg!(&cans_s);
-    dbg!(&need_opener_cans_s);
-    dbg!(&s);
-
     for i in 0..m {
         let cans_count = i;
         let mut need_opener_cans_count = m - i;
@@ -61,7 +57,20 @@ fn main() {
             continue;
         }
 
-        need_opener_cans_count -= opener_count;
+        let mut left = 0;
+        let mut right = need_opener_cans_count;
+
+        while left < right {
+            let mid = (left + right) / 2;
+            let s_count = need_opener_cans_count - mid;
+            if s[s_count.min(s.len() - 1)] >= mid {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        need_opener_cans_count = left;
 
         let cans_sum = cans_s[cans_count];
         let need_opener_cans_sum = need_opener_cans_s[need_opener_cans_count];

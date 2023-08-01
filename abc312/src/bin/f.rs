@@ -52,36 +52,25 @@ fn main() {
             continue;
         }
 
-        let opener_count = s.lower_bound(&need_opener_cans_count);
-        if need_opener_cans_count < opener_count {
-            continue;
-        }
-
         let mut left = 0;
         let mut right = need_opener_cans_count;
 
         while left < right {
             let mid = (left + right) / 2;
             let s_count = need_opener_cans_count - mid;
-            if s[s_count.min(s.len() - 1)] >= mid {
+            if s[s_count.min(s.len() - 1)] < mid {
                 left = mid + 1;
             } else {
                 right = mid;
             }
         }
 
-        need_opener_cans_count = left;
+        need_opener_cans_count = right;
 
         let cans_sum = cans_s[cans_count];
         let need_opener_cans_sum = need_opener_cans_s[need_opener_cans_count];
 
-        dbg!(
-            i,
-            opener_count,
-            need_opener_cans_count,
-            cans_sum,
-            need_opener_cans_sum
-        );
+        dbg!(i, need_opener_cans_count, cans_sum, need_opener_cans_sum);
         ans = ans.max(cans_sum + need_opener_cans_sum);
     }
 

@@ -1,5 +1,3 @@
-use std::cmp::Ordering;
-
 use proconio::input;
 
 fn main() {
@@ -28,7 +26,7 @@ fn main() {
 
     let mut cans_s = vec![0; cans.len() + 1];
     let mut need_opener_cans_s = vec![0; need_opener_cans.len() + 1];
-    let mut s = vec![0; openers.len() + 1];
+    let mut openers_s = vec![0; openers.len() + 1];
     for i in 0..cans.len() {
         cans_s[i + 1] = cans_s[i] + cans[i];
     }
@@ -36,12 +34,12 @@ fn main() {
         need_opener_cans_s[i + 1] = need_opener_cans_s[i] + need_opener_cans[i];
     }
     for i in 0..openers.len() {
-        s[i + 1] = s[i] + openers[i];
+        openers_s[i + 1] = openers_s[i] + openers[i];
     }
 
     let mut ans = 0;
 
-    for i in 0..m {
+    for i in 0..=m {
         let cans_count = i;
         let mut need_opener_cans_count = m - i;
 
@@ -55,14 +53,18 @@ fn main() {
         while left < right {
             let mid = (left + right) / 2;
             let s_count = need_opener_cans_count - mid;
-            if s[s_count.min(s.len() - 1)] >= mid {
+            if openers_s[s_count.min(openers_s.len() - 1)] >= mid {
                 left = mid + 1;
             } else {
                 right = mid;
             }
         }
 
-        need_opener_cans_count = left - 1;
+        need_opener_cans_count = left.saturating_sub(1);
+
+        if need_opener_cans_s.len() <= need_opener_cans_count {
+            continue;
+        }
 
         let cans_sum = cans_s[cans_count];
         let need_opener_cans_sum = need_opener_cans_s[need_opener_cans_count];
@@ -71,47 +73,4 @@ fn main() {
     }
 
     println!("{}", ans);
-}
-
-pub trait BinarySearch<T> {
-    fn lower_bound(&self, x: &T) -> usize;
-    fn upper_bound(&self, x: &T) -> usize;
-}
-
-impl<T: Ord> BinarySearch<T> for [T] {
-    fn lower_bound(&self, x: &T) -> usize {
-        let mut low = 0;
-        let mut high = self.len();
-
-        while low != high {
-            let mid = (low + high) / 2;
-            match self[mid].cmp(x) {
-                Ordering::Less => {
-                    low = mid + 1;
-                }
-                Ordering::Equal | Ordering::Greater => {
-                    high = mid;
-                }
-            }
-        }
-        low
-    }
-
-    fn upper_bound(&self, x: &T) -> usize {
-        let mut low = 0;
-        let mut high = self.len();
-
-        while low != high {
-            let mid = (low + high) / 2;
-            match self[mid].cmp(x) {
-                Ordering::Less | Ordering::Equal => {
-                    low = mid + 1;
-                }
-                Ordering::Greater => {
-                    high = mid;
-                }
-            }
-        }
-        low
-    }
 }

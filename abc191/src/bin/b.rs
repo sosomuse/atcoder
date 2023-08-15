@@ -1,3 +1,15 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+        x: usize,
+        a: [usize; n],
+    };
+
+    for i in 0..n {
+        if a[i] != x {
+            print!("{} ", a[i]);
+        }
+    }
 }

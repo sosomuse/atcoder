@@ -1,3 +1,13 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        x: isize,
+    };
+
+    if x < 0 {
+        println!("{}", 0);
+    } else {
+        println!("{}", x);
+    }
 }

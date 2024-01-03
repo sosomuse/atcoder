@@ -1,3 +1,14 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        b: usize,
+        g: usize,
+    };
+
+    if b < g {
+        println!("Grove");
+    } else {
+        println!("Bat");
+    }
 }

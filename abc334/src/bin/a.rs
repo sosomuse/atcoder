@@ -7,7 +7,7 @@ fn main() {
     };
 
     if b < g {
-        println!("Grove");
+        println!("Glove");
     } else {
         println!("Bat");
     }

@@ -1,3 +1,11 @@
+use proconio::input;
+
 fn main() {
-    unimplemented!();
+    input! {
+        n: usize,
+    };
+
+    let s = n.to_string();
+
+    println!("{}", s.repeat(n))
 }
